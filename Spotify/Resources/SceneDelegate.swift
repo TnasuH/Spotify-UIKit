@@ -29,10 +29,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
            
         }
         window?.makeKeyAndVisible()
-        
-        AuthManager.shared.refreshIfNeeded { success in
-            print("Res: \(success)")
-        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
