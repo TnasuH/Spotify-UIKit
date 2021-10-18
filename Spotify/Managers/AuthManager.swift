@@ -15,6 +15,8 @@ final class AuthManager {
         private static var clientSecret: String = ""
         static let tokenAPIURL: String = "https://accounts.spotify.com/api/token"
         static let redirectURI = "https://www.tnasuh.com"
+        static let scopes = "user-read-private%20playlist-modify-public%20playlist-read-private%20playlist-modify-private%20user-follow-read%20user-library-modify%20user-library-read%20user-read-email"
+        
         
         static let ud_accessToken = "access_token"
         static let ud_refreshToken = "refresh_token"
@@ -49,10 +51,9 @@ final class AuthManager {
     private init() {}
     
     public var signInURL: URL? {
-        let scopes = "user-read-private"
         
         let base = "https://accounts.spotify.com/authorize"
-        let urlString = "\(base)?response_type=code&client_id=\(Constants.getClientID())&scope=\(scopes)&redirect_uri=\(Constants.redirectURI)&show_dialog=TRUE"
+        let urlString = "\(base)?response_type=code&client_id=\(Constants.getClientID())&scope=\(Constants.scopes)&redirect_uri=\(Constants.redirectURI)&show_dialog=TRUE"
         return URL(string: urlString)
     }
     
@@ -79,6 +80,7 @@ final class AuthManager {
     }
     
     public func exchangeCodeForToken(code: String, completion: @escaping (Bool) -> Void) {
+        //Get_Token
         guard let url = URL(string: Constants.tokenAPIURL) else {return}
        
         var components = URLComponents()
@@ -121,13 +123,62 @@ final class AuthManager {
         task.resume()
     }
     
-    public func refreshAccessToken() {
+    public func refreshIfNeeded(completion: @escaping (Bool) -> Void) {
+        guard shouldRefreshToken else {
+            completion(true)
+            return
+        }
+        guard let refreshToken = self.refreshToken else {
+            return
+        }
+        // refresh the token
+        guard let url = URL(string: Constants.tokenAPIURL) else {return}
+       
+        var components = URLComponents()
+        components.queryItems = [
+            URLQueryItem(name: "grant_type", value: "refresh_token"),
+            URLQueryItem(name: "refresh_token", value: refreshToken)
+        ]
         
+        var req = URLRequest(url: url)
+        req.httpMethod = "POST"
+        req.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        let basicToken = Constants.getClientID() + ":" + Constants.getClientSecret()
+        let data = basicToken.data(using: .utf8)
+        guard let base64String = data?.base64EncodedString() else {
+            print("Err!: Failure to get base64String")
+            completion(false)
+            return
+        }
+        req.setValue("Basic \(base64String)", forHTTPHeaderField: "Authorization")
+        req.httpBody = components.query?.data(using: .utf8)
+        
+        let task = URLSession.shared.dataTask(with: req) {[weak self] data, urlResponse, error in
+            guard let data = data, error == nil else {
+                print("Err!: data error")
+                completion(false)
+                return
+            }
+            do {
+                let result = try JSONDecoder().decode(AuthResponse.self, from: data)
+                print("Success!: \(result)")
+                self?.cacheToken(result: result)
+                
+                completion(true)
+            }
+            catch{
+                print("Err!: \(error.localizedDescription)")
+                completion(false)
+            }
+        }
+        task.resume()
     }
     
     public func cacheToken(result: AuthResponse) {
         UserDefaults.standard.setValue(result.access_token, forKey: Constants.ud_accessToken)
-        UserDefaults.standard.setValue(result.refresh_token, forKey: Constants.ud_refreshToken)
+        if let refresh_token = result.refresh_token {
+            UserDefaults.standard.setValue(refresh_token, forKey: Constants.ud_refreshToken)
+        }
         UserDefaults.standard.setValue(Date().addingTimeInterval(TimeInterval(result.expires_in)), forKey: Constants.ud_expirationDate)
     }
 }
