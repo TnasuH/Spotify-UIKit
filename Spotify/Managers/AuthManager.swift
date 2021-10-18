@@ -19,7 +19,6 @@ final class AuthManager {
         static let redirectURI = "http://www.tnasuh.com"
         static let scopes = "user-read-private%20playlist-modify-public%20playlist-read-private%20playlist-modify-private%20user-follow-read%20user-library-modify%20user-library-read%20user-read-email"
         
-        
         static let ud_accessToken = "access_token"
         static let ud_refreshToken = "refresh_token"
         static let ud_expirationDate = "expirationDate"
@@ -74,6 +73,7 @@ final class AuthManager {
     private var tokenExpirationDate: Date? {
         return UserDefaults.standard.object(forKey: Constants.ud_expirationDate) as? Date
     }
+    
     private var shouldRefreshToken: Bool {
         guard let expirationDate = tokenExpirationDate else { return false }
         let currDate = Date()

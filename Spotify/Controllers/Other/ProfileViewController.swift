@@ -10,7 +10,6 @@ import SDWebImage
 
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.isHidden = true
@@ -99,8 +98,4 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return models.count
     }
-    
-    
-    
-    
 }

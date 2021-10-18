@@ -32,5 +32,4 @@ extension UIView {
     var bottom: CGFloat {
         return top + height
     }
-    
 }

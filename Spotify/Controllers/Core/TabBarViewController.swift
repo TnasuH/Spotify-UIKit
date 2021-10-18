@@ -17,8 +17,6 @@ class TabBarViewController: UITabBarController {
         let libNC = createNavController(for: LibraryViewController(), title: "Library",image: UIImage(systemName: "music.note.list"), selectedImage: UIImage(systemName: "music.note.list"), tagForTabBarItem: 3)
         
         setViewControllers([homeNC, searchNC, libNC], animated: false)
-        
-        
     }
 
     fileprivate func createNavController(for rootViewController: UIViewController,
@@ -32,10 +30,7 @@ class TabBarViewController: UITabBarController {
         nc.tabBarItem.selectedImage = image
         nc.tabBarItem.tag = tagForTabBarItem
         nc.navigationBar.tintColor = .label
-        //navController.tabBarItem.selectedImage = selectedImage
-        //navController.tabBarItem.image = image
         
         return nc
     }
-    
 }
