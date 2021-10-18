@@ -88,3 +88,20 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+
+
+# API Secret Key Security
+# use your api keys like these
+# * * * * * * * * * * * * * * * 
+#<?xml version="1.0" encoding="UTF-8"?>
+#<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+#<plist version="1.0">
+#<dict>
+#	<key>ClientSecret</key>
+#	<string> - - - - YOUR CLIENT SECRET KEY HERE - - - - - </string>
+#	<key>ClientID</key>
+#	<string> - - - - - -YOUR CLIENT ID KEY HERE- - - - - - - </string>
+#</dict>
+#</plist>
+# * * * * * * * * * * * * * * * * 
+Spotify/Resources/ClientConfig.plist
