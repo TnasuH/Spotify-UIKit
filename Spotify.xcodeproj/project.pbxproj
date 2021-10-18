@@ -33,6 +33,7 @@
 		2EA34519271D0AEC008CE5C7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA34518271D0AEC008CE5C7 /* Extensions.swift */; };
 		2EA3451B271D1DC8008CE5C7 /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA3451A271D1DC8008CE5C7 /* AuthResponse.swift */; };
 		2EA3451D271D39B1008CE5C7 /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA3451C271D39B1008CE5C7 /* SettingsModel.swift */; };
+		58416A9571EBED0558808626 /* Pods_Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE3AFC18B3D8126BD2FC3BCA /* Pods_Spotify.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,9 @@
 		2EA34518271D0AEC008CE5C7 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		2EA3451A271D1DC8008CE5C7 /* AuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponse.swift; sourceTree = "<group>"; };
 		2EA3451C271D39B1008CE5C7 /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
+		30EE1A416FD8E67B18AFBD91 /* Pods-Spotify.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spotify.release.xcconfig"; path = "Target Support Files/Pods-Spotify/Pods-Spotify.release.xcconfig"; sourceTree = "<group>"; };
+		37F73E1ECB0B76FDB2D18B8B /* Pods-Spotify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spotify.debug.xcconfig"; path = "Target Support Files/Pods-Spotify/Pods-Spotify.debug.xcconfig"; sourceTree = "<group>"; };
+		FE3AFC18B3D8126BD2FC3BCA /* Pods_Spotify.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spotify.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58416A9571EBED0558808626 /* Pods_Spotify.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,6 +87,8 @@
 			children = (
 				2E075291271CF169008CC5AB /* Spotify */,
 				2E075290271CF169008CC5AB /* Products */,
+				859BDED40E51D750B553FE53 /* Pods */,
+				F5155EF67C74A87823F60017 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -191,6 +198,24 @@
 			path = Other;
 			sourceTree = "<group>";
 		};
+		859BDED40E51D750B553FE53 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				37F73E1ECB0B76FDB2D18B8B /* Pods-Spotify.debug.xcconfig */,
+				30EE1A416FD8E67B18AFBD91 /* Pods-Spotify.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		F5155EF67C74A87823F60017 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FE3AFC18B3D8126BD2FC3BCA /* Pods_Spotify.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -198,9 +223,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2E0752A3271CF16D008CC5AB /* Build configuration list for PBXNativeTarget "Spotify" */;
 			buildPhases = (
+				479589DEBBF8543F347972FC /* [CP] Check Pods Manifest.lock */,
 				2E07528B271CF169008CC5AB /* Sources */,
 				2E07528C271CF169008CC5AB /* Frameworks */,
 				2E07528D271CF169008CC5AB /* Resources */,
+				1CF151066741F833D97B6D61 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -256,6 +283,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1CF151066741F833D97B6D61 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Spotify/Pods-Spotify-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Spotify/Pods-Spotify-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Spotify/Pods-Spotify-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		479589DEBBF8543F347972FC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Spotify-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2E07528B271CF169008CC5AB /* Sources */ = {
@@ -420,6 +489,7 @@
 		};
 		2E0752A4271CF16D008CC5AB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 37F73E1ECB0B76FDB2D18B8B /* Pods-Spotify.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -447,6 +517,7 @@
 		};
 		2E0752A5271CF16D008CC5AB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 30EE1A416FD8E67B18AFBD91 /* Pods-Spotify.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
