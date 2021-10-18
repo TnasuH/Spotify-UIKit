@@ -11,8 +11,8 @@ final class AuthManager {
     static let shared = AuthManager()
     
     struct Constants {
-        private static var clientID : String = "" // = "56c8955b963e43b69ee08ed36553cb4e"
-        private static var clientSecret: String = "" // = "da90a6ea506e44478feefb8381ddc498"
+        private static var clientID : String = ""
+        private static var clientSecret: String = ""
         
         static func getClientID() -> String {
             if clientID.isEmpty {
