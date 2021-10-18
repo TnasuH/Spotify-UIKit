@@ -31,6 +31,7 @@ class TabBarViewController: UITabBarController {
         nc.tabBarItem.image = image
         nc.tabBarItem.selectedImage = image
         nc.tabBarItem.tag = tagForTabBarItem
+        nc.navigationBar.tintColor = .label
         //navController.tabBarItem.selectedImage = selectedImage
         //navController.tabBarItem.image = image
         

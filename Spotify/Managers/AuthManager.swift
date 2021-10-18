@@ -149,13 +149,13 @@ final class AuthManager {
         }
     }
     
-    public func refreshIfNeeded(completion: @escaping (Bool) -> Void) {
+    public func refreshIfNeeded(completion: ((Bool) -> Void)?) {
         guard !refreshingToken else {
             return
         }
         
         guard shouldRefreshToken else {
-            completion(true)
+            completion?(true)
             return
         }
         guard let refreshToken = self.refreshToken else {
@@ -179,7 +179,7 @@ final class AuthManager {
         let data = basicToken.data(using: .utf8)
         guard let base64String = data?.base64EncodedString() else {
             print("Err!: Failure to get base64String")
-            completion(false)
+            completion?(false)
             return
         }
         req.setValue("Basic \(base64String)", forHTTPHeaderField: "Authorization")
@@ -189,7 +189,7 @@ final class AuthManager {
             self?.refreshingToken = false
             guard let data = data, error == nil else {
                 print("Err!: data error")
-                completion(false)
+                completion?(false)
                 return
             }
             do {
@@ -199,11 +199,11 @@ final class AuthManager {
                 print("Success!: \(result)")
                 self?.cacheToken(result: result)
                 
-                completion(true)
+                completion?(true)
             }
             catch{
                 print("Err!: \(error.localizedDescription)")
-                completion(false)
+                completion?(false)
             }
         }
         task.resume()
