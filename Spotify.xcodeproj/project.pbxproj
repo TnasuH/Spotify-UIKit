@@ -22,6 +22,13 @@
 		2EA34502271CF629008CE5C7 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA34501271CF629008CE5C7 /* PlayerViewController.swift */; };
 		2EA34504271CF639008CE5C7 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA34503271CF639008CE5C7 /* PlaylistViewController.swift */; };
 		2EA34506271CF65E008CE5C7 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA34505271CF65E008CE5C7 /* SearchResultsViewController.swift */; };
+		2EA34508271CF6C9008CE5C7 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA34507271CF6C9008CE5C7 /* AuthManager.swift */; };
+		2EA3450A271CF6DF008CE5C7 /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA34509271CF6DF008CE5C7 /* APICaller.swift */; };
+		2EA3450C271CF6FF008CE5C7 /* HapticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA3450B271CF6FF008CE5C7 /* HapticsManager.swift */; };
+		2EA3450E271CF71A008CE5C7 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA3450D271CF71A008CE5C7 /* Playlist.swift */; };
+		2EA34510271CF728008CE5C7 /* AudioTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA3450F271CF728008CE5C7 /* AudioTrack.swift */; };
+		2EA34512271CF736008CE5C7 /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA34511271CF736008CE5C7 /* Artist.swift */; };
+		2EA34514271CF74E008CE5C7 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA34513271CF74E008CE5C7 /* UserProfile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +49,13 @@
 		2EA34501271CF629008CE5C7 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		2EA34503271CF639008CE5C7 /* PlaylistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
 		2EA34505271CF65E008CE5C7 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
+		2EA34507271CF6C9008CE5C7 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		2EA34509271CF6DF008CE5C7 /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
+		2EA3450B271CF6FF008CE5C7 /* HapticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsManager.swift; sourceTree = "<group>"; };
+		2EA3450D271CF71A008CE5C7 /* Playlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
+		2EA3450F271CF728008CE5C7 /* AudioTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioTrack.swift; sourceTree = "<group>"; };
+		2EA34511271CF736008CE5C7 /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
+		2EA34513271CF74E008CE5C7 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +119,10 @@
 		2E0752A8271CF1A3008CC5AB /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				2EA3450D271CF71A008CE5C7 /* Playlist.swift */,
+				2EA3450F271CF728008CE5C7 /* AudioTrack.swift */,
+				2EA34511271CF736008CE5C7 /* Artist.swift */,
+				2EA34513271CF74E008CE5C7 /* UserProfile.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -119,6 +137,9 @@
 		2E0752AA271CF1B8008CC5AB /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				2EA34507271CF6C9008CE5C7 /* AuthManager.swift */,
+				2EA34509271CF6DF008CE5C7 /* APICaller.swift */,
+				2EA3450B271CF6FF008CE5C7 /* HapticsManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -136,8 +157,8 @@
 		2EA344F7271CF5A2008CE5C7 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				2E075296271CF169008CC5AB /* HomeViewController.swift */,
 				2EA344F0271CF549008CE5C7 /* TabBarViewController.swift */,
+				2E075296271CF169008CC5AB /* HomeViewController.swift */,
 				2EA344F2271CF568008CE5C7 /* SearchViewController.swift */,
 				2EA344F5271CF590008CE5C7 /* LibraryViewController.swift */,
 			);
@@ -229,17 +250,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				2EA344F3271CF568008CE5C7 /* SearchViewController.swift in Sources */,
+				2EA3450E271CF71A008CE5C7 /* Playlist.swift in Sources */,
+				2EA34508271CF6C9008CE5C7 /* AuthManager.swift in Sources */,
 				2EA34506271CF65E008CE5C7 /* SearchResultsViewController.swift in Sources */,
 				2EA344FC271CF5EA008CE5C7 /* WelcomeViewController.swift in Sources */,
 				2EA34500271CF61F008CE5C7 /* ProfileViewController.swift in Sources */,
 				2EA344F1271CF549008CE5C7 /* TabBarViewController.swift in Sources */,
+				2EA3450C271CF6FF008CE5C7 /* HapticsManager.swift in Sources */,
+				2EA34510271CF728008CE5C7 /* AudioTrack.swift in Sources */,
 				2E075297271CF169008CC5AB /* HomeViewController.swift in Sources */,
 				2EA344FA271CF5D4008CE5C7 /* AuthViewController.swift in Sources */,
 				2E075293271CF169008CC5AB /* AppDelegate.swift in Sources */,
+				2EA34514271CF74E008CE5C7 /* UserProfile.swift in Sources */,
 				2EA344F6271CF590008CE5C7 /* LibraryViewController.swift in Sources */,
+				2EA34512271CF736008CE5C7 /* Artist.swift in Sources */,
 				2EA34504271CF639008CE5C7 /* PlaylistViewController.swift in Sources */,
 				2E075295271CF169008CC5AB /* SceneDelegate.swift in Sources */,
 				2EA34502271CF629008CE5C7 /* PlayerViewController.swift in Sources */,
+				2EA3450A271CF6DF008CE5C7 /* APICaller.swift in Sources */,
 				2EA344FE271CF608008CE5C7 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
