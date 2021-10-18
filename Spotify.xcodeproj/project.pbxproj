@@ -31,6 +31,7 @@
 		2EA34514271CF74E008CE5C7 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA34513271CF74E008CE5C7 /* UserProfile.swift */; };
 		2EA34517271D0480008CE5C7 /* ClientConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2EA34516271D0480008CE5C7 /* ClientConfig.plist */; };
 		2EA34519271D0AEC008CE5C7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA34518271D0AEC008CE5C7 /* Extensions.swift */; };
+		2EA3451B271D1DC8008CE5C7 /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA3451A271D1DC8008CE5C7 /* AuthResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +61,7 @@
 		2EA34513271CF74E008CE5C7 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		2EA34516271D0480008CE5C7 /* ClientConfig.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ClientConfig.plist; sourceTree = "<group>"; };
 		2EA34518271D0AEC008CE5C7 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		2EA3451A271D1DC8008CE5C7 /* AuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +129,7 @@
 				2EA3450F271CF728008CE5C7 /* AudioTrack.swift */,
 				2EA34511271CF736008CE5C7 /* Artist.swift */,
 				2EA34513271CF74E008CE5C7 /* UserProfile.swift */,
+				2EA3451A271D1DC8008CE5C7 /* AuthResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -264,6 +267,7 @@
 				2EA34500271CF61F008CE5C7 /* ProfileViewController.swift in Sources */,
 				2EA344F1271CF549008CE5C7 /* TabBarViewController.swift in Sources */,
 				2EA3450C271CF6FF008CE5C7 /* HapticsManager.swift in Sources */,
+				2EA3451B271D1DC8008CE5C7 /* AuthResponse.swift in Sources */,
 				2EA34510271CF728008CE5C7 /* AudioTrack.swift in Sources */,
 				2E075297271CF169008CC5AB /* HomeViewController.swift in Sources */,
 				2EA344FA271CF5D4008CE5C7 /* AuthViewController.swift in Sources */,

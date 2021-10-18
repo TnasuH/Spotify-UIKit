@@ -41,7 +41,13 @@ class AuthViewController: UIViewController, WKNavigationDelegate {
         // Exchange the code for access token
         guard let code = URLComponents(string: url.absoluteString)?.queryItems?.first(where: { $0.name == "code"})?.value else { return }
         print("Code: \(code)")
-        AuthManager.shared.
+        AuthManager.shared.exchangeCodeForToken(code: code) { success in
+            DispatchQueue.main.async {
+                self.navigationController?.popToRootViewController(animated: true)
+                self.completionHandler?(success)
+            }
+            
+        }
     }
     
 }
