@@ -212,7 +212,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 withReuseIdentifier: FeaturedPlaylistCollectionViewCell.identifier,
                 for: indexPath)
             as? FeaturedPlaylistCollectionViewCell  else {
-                print("whoo1")
                 return UICollectionViewCell()
             }
             cell.backgroundColor = .green
@@ -222,18 +221,16 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 withReuseIdentifier: NewReleaseCollectionViewCell.identifier,
                 for: indexPath)
             as? NewReleaseCollectionViewCell  else {
-                print("whoo2")
                 return UICollectionViewCell()
             }
             let viewModel = viewModels[indexPath.row]
-            cell.backgroundColor = .red
+            cell.configure(with: viewModel)
             return cell
         case .recommandedTracks(viewModel: let viewModels):
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: RecommendedTrackCollectionViewCell.identifier,
                 for: indexPath)
             as? RecommendedTrackCollectionViewCell else {
-                print("whoo3")
                 return UICollectionViewCell()
             }
             cell.backgroundColor = .blue
