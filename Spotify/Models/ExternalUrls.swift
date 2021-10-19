@@ -1,13 +1,19 @@
+// This file was generated from JSON Schema using quicktype, do not modify it directly.
+// To parse the JSON, add this file to your project and do:
 //
-//  ExternalUrls.swift
-//  Spotify
-//
-//  Created by Tarık Nasuhoğlu on 18.10.2021.
-//
+//   let externalUrls = try? newJSONDecoder().decode(ExternalUrls.self, from: jsonData)
 
 import Foundation
 
 // MARK: - ExternalUrls
-struct ExternalUrls: Codable {
-    let spotify: String
+public struct ExternalUrls: Codable {
+    public let spotify: String
+
+    enum CodingKeys: String, CodingKey {
+        case spotify
+    }
+
+    public init(spotify: String) {
+        self.spotify = spotify
+    }
 }

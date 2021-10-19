@@ -43,18 +43,27 @@ final class APICaller {
         }
     }
     
-    public func getAllFeaturedPlaylists(completion: @escaping (Result<FeaturedPlaylistsResponse, Error>) -> Void) {
+    public func getAllFeaturedPlaylists(completion: @escaping (Result<FeaturedPlaylistResponse, Error>) -> Void) {
         createRequest(with: URL(string: Constants.baseAPIURL + "/browse/featured-playlists"), type: .GET) { baseRequest in
             let task = URLSession.shared.dataTask(with: baseRequest) { data, urlResponse, error in
                 guard let data = data, error == nil else {
+                    print("-----2")
                     completion(.failure(APIError.failedToGetData))
                     return
                 }
                 do {
-                    let result = try JSONDecoder().decode(FeaturedPlaylistsResponse.self, from: data)
+                    let res = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+                    print("res is \(res)")
+                    
+                    let result = try JSONDecoder().decode(FeaturedPlaylistResponse.self, from: data)
+                    print("******")
                     completion(.success(result))
                 }
                 catch {
+                    
+                    print("-----1 \(error.localizedDescription)")
+                    print("-----1.1 \(error)")
+                    
                     completion(.failure(error))
                 }
             }
@@ -95,14 +104,14 @@ final class APICaller {
                     return
                 }
                 do {
-                    let asd = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
-                    print("asdddd222 \(asd)")
                     let result = try JSONDecoder().decode(RecommendationsResponse.self, from: data)
                     print("Recommendations!! \(result)")
                     completion(.success(result))
                 }
                 catch {
                     print("errr2")
+                    print(error.localizedDescription)
+                    print(error)
                     completion(.failure(error))
                 }
             }
@@ -112,7 +121,7 @@ final class APICaller {
     
     // MARK: - User Profile API
     
-    public func getCurrentUserProfile(completion: @escaping (Result<UserProfile, Error>) -> Void) {
+    public func getCurrentUserProfile(completion: @escaping (Result<User, Error>) -> Void) {
         createRequest(with: URL(string: Constants.baseAPIURL + "/me"),
                       type: .GET) { baseRequest in
             let task = URLSession.shared.dataTask(with:  baseRequest) { data, _, error in
@@ -121,7 +130,7 @@ final class APICaller {
                     return
                 }
                 do {
-                    let result = try JSONDecoder().decode(UserProfile.self, from: data)
+                    let result = try JSONDecoder().decode(User.self, from: data)
                     completion(.success(result))
                 } catch {
                     print(error.localizedDescription)
