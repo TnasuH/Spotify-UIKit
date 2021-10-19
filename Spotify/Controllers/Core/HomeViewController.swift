@@ -198,8 +198,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        print("sectionsCount")
-        print(sections.count)
         return sections.count
     }
     
