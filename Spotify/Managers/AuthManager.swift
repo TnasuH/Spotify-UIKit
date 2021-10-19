@@ -19,7 +19,6 @@ final class AuthManager {
         static let redirectURI = "http://www.tnasuh.com"
         static let scopes = "user-read-private%20playlist-modify-public%20playlist-read-private%20playlist-modify-private%20user-follow-read%20user-library-modify%20user-library-read%20user-read-email"
         
-        
         static let ud_accessToken = "access_token"
         static let ud_refreshToken = "refresh_token"
         static let ud_expirationDate = "expirationDate"
@@ -74,6 +73,7 @@ final class AuthManager {
     private var tokenExpirationDate: Date? {
         return UserDefaults.standard.object(forKey: Constants.ud_expirationDate) as? Date
     }
+    
     private var shouldRefreshToken: Bool {
         guard let expirationDate = tokenExpirationDate else { return false }
         let currDate = Date()
@@ -149,13 +149,13 @@ final class AuthManager {
         }
     }
     
-    public func refreshIfNeeded(completion: @escaping (Bool) -> Void) {
+    public func refreshIfNeeded(completion: ((Bool) -> Void)?) {
         guard !refreshingToken else {
             return
         }
         
         guard shouldRefreshToken else {
-            completion(true)
+            completion?(true)
             return
         }
         guard let refreshToken = self.refreshToken else {
@@ -179,7 +179,7 @@ final class AuthManager {
         let data = basicToken.data(using: .utf8)
         guard let base64String = data?.base64EncodedString() else {
             print("Err!: Failure to get base64String")
-            completion(false)
+            completion?(false)
             return
         }
         req.setValue("Basic \(base64String)", forHTTPHeaderField: "Authorization")
@@ -189,7 +189,7 @@ final class AuthManager {
             self?.refreshingToken = false
             guard let data = data, error == nil else {
                 print("Err!: data error")
-                completion(false)
+                completion?(false)
                 return
             }
             do {
@@ -199,11 +199,11 @@ final class AuthManager {
                 print("Success!: \(result)")
                 self?.cacheToken(result: result)
                 
-                completion(true)
+                completion?(true)
             }
             catch{
                 print("Err!: \(error.localizedDescription)")
-                completion(false)
+                completion?(false)
             }
         }
         task.resume()

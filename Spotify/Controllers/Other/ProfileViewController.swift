@@ -10,7 +10,6 @@ import SDWebImage
 
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.isHidden = true
@@ -49,14 +48,14 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             
         }
     }
-    private func updateUI(with model: UserProfile) {
+    private func updateUI(with model: User) {
         tableView.isHidden = false
         // configure table model
         models.append("Fullname: \(model.displayName)")
         models.append("Email: \(model.email)")
         models.append("UserID: \(model.id)")
         models.append("Plan: \(model.product)")
-        createTableHeader(with: model.images.first?.url)
+        createTableHeader(with: model.images?.first?.url)
         tableView.reloadData()
     }
     
@@ -99,8 +98,4 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return models.count
     }
-    
-    
-    
-    
 }
