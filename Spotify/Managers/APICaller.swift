@@ -83,9 +83,8 @@ final class APICaller {
             }
     
     public func getRecommendations(genres: Set<String>, completion: @escaping (Result<RecommendationsResponse, Error>) -> Void) {
-        print("asd \(genres)")
         let seeds = genres.joined(separator: ",")
-        createRequest(with: URL(string: Constants.baseAPIURL + "/recommendations?limit=2&seed_genres=\(seeds)"),
+        createRequest(with: URL(string: Constants.baseAPIURL + "/recommendations?limit=10&seed_genres=\(seeds)"),
                       type: .GET) { request in
             print("baseRequest is: \(request.url?.absoluteString)")
             let task = URLSession.shared.dataTask(with: request) { data, urlResponse, error in

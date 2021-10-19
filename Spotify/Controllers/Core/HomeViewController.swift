@@ -190,7 +190,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         case .recommandedTracks(viewModel: let viewModels):
             return viewModels.count
         }
-        print("arribaa")
         return 0
     }
     
@@ -227,8 +226,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             as? RecommendedTrackCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            let viewModel = viewModels[indexPath.row]
-            
+            cell.configure(with: viewModels[indexPath.row])
             return cell
         }
         
