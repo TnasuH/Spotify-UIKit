@@ -9,8 +9,8 @@ import UIKit
 
 enum BrowseSectionType {
     case newReleases(viewModel: [NewReleasesCellViewModel])        //1
-    case featuredPlaylist(viewModel: [NewReleasesCellViewModel])   //2
-    case recommandedTracks(viewModel: [NewReleasesCellViewModel])  //3
+    case featuredPlaylist(viewModel: [FeaturedPlaylistCellViewModel])   //2
+    case recommandedTracks(viewModel: [RecommendedTrackCellViewModel])  //3
 }
 
 class HomeViewController: UIViewController {
@@ -141,34 +141,31 @@ class HomeViewController: UIViewController {
         playList: [PlaylistsItem],
         tracks: [Track]
     ) {
-        print("***")
-        print(newAlbums.count)
-        print(playList.count)
-        print(tracks.count)
-        print("---")
+        
         // Configure Models
         sections.append(.newReleases(viewModel: newAlbums.compactMap({
+            ///During development, api was updated and the numberOfTracks value started to come in nil.
+            ///Therefore I started using random value for the view.
             return NewReleasesCellViewModel(
                 name: $0.name,
                 artworkURL: URL(string: $0.images.first?.url ?? ""),
-                numberOfTracks: 4,
+                numberOfTracks: $0.totalTracks ?? Int.random(in: 1..<14),
                 artistName: $0.artists.first?.name ?? "-"
             )
         })))
         sections.append(.featuredPlaylist(viewModel: playList.compactMap({
-            return NewReleasesCellViewModel(
+            
+            return FeaturedPlaylistCellViewModel(
                 name: $0.name,
                 artworkURL: URL(string: $0.images.first?.url ?? ""),
-                numberOfTracks: $0.tracks.total,
-                artistName: "-"
+                creatorName: $0.owner.displayName ?? $0.owner.id
             )
         })))
         sections.append(.recommandedTracks(viewModel: tracks.compactMap({
-            return NewReleasesCellViewModel(
-                name: $0.name ?? "-",
-                artworkURL: URL(string: $0.album?.images.first?.url ?? ""),
-                numberOfTracks: 4,
-                artistName: $0.artists.first?.name ?? "-"
+            return RecommendedTrackCellViewModel(
+                name: $0.name ?? "",
+                artistName: $0.artists.first?.name ?? "-",
+                artworkURL: URL(string: $0.album?.images.first?.url ?? "")
             )
         })))
         collectionView.reloadData()
@@ -193,7 +190,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         case .recommandedTracks(viewModel: let viewModels):
             return viewModels.count
         }
-        print("arribaa")
         return 0
     }
     
@@ -212,7 +208,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             as? FeaturedPlaylistCollectionViewCell  else {
                 return UICollectionViewCell()
             }
-            cell.backgroundColor = .green
+            cell.configure(with: viewModels[indexPath.row])
             return cell
         case .newReleases(viewModel: let viewModels):
             guard let cell = collectionView.dequeueReusableCell(
@@ -221,8 +217,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             as? NewReleaseCollectionViewCell  else {
                 return UICollectionViewCell()
             }
-            let viewModel = viewModels[indexPath.row]
-            cell.configure(with: viewModel)
+            cell.configure(with: viewModels[indexPath.row])
             return cell
         case .recommandedTracks(viewModel: let viewModels):
             guard let cell = collectionView.dequeueReusableCell(
@@ -231,7 +226,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             as? RecommendedTrackCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            cell.backgroundColor = .blue
+            cell.configure(with: viewModels[indexPath.row])
             return cell
         }
         
