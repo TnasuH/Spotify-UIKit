@@ -1,8 +1,216 @@
+//
+//  Spotify.swift
+//  Spotify
+//
+//  Created by Tarık Nasuhoğlu on 20.10.2021.
+//
+
+import Foundation
+// Spotify.swift
+
+// Postman Echo is service you can use to test your REST clients and make sample API calls.
+// It provides endpoints for `GET`, `POST`, `PUT`, various auth mechanisms and other utility
+// endpoints.
+//
+// The documentation for the endpoints as well as example responses can be found at
+// [https://postman-echo.com](https://postman-echo.com/?source=echo-collection-app-onboarding)
+
+import Foundation
+
+// MARK: - Spotify
+struct Spotify: Codable {
+    let info: Info
+    let item: [SpotifyItem]
+}
+
+// Info.swift
+
+// Postman Echo is service you can use to test your REST clients and make sample API calls.
+// It provides endpoints for `GET`, `POST`, `PUT`, various auth mechanisms and other utility
+// endpoints.
+//
+// The documentation for the endpoints as well as example responses can be found at
+// [https://postman-echo.com](https://postman-echo.com/?source=echo-collection-app-onboarding)
+
+import Foundation
+
+// MARK: - Info
+struct Info: Codable {
+    let postmanID, name: String
+    let schema: String
+
+    enum CodingKeys: String, CodingKey {
+        case postmanID = "_postman_id"
+        case name, schema
+    }
+}
+
+// SpotifyItem.swift
+
+// Postman Echo is service you can use to test your REST clients and make sample API calls.
+// It provides endpoints for `GET`, `POST`, `PUT`, various auth mechanisms and other utility
+// endpoints.
+//
+// The documentation for the endpoints as well as example responses can be found at
+// [https://postman-echo.com](https://postman-echo.com/?source=echo-collection-app-onboarding)
+
+import Foundation
+
+// MARK: - SpotifyItem
+struct SpotifyItem: Codable {
+    let name: String
+    let item: [ItemItem]
+}
+
+// ItemItem.swift
+
+// Postman Echo is service you can use to test your REST clients and make sample API calls.
+// It provides endpoints for `GET`, `POST`, `PUT`, various auth mechanisms and other utility
+// endpoints.
+//
+// The documentation for the endpoints as well as example responses can be found at
+// [https://postman-echo.com](https://postman-echo.com/?source=echo-collection-app-onboarding)
+
+import Foundation
+
+// MARK: - ItemItem
+struct ItemItem: Codable {
+    let name: String
+    let request: Request
+    let response: [JSONAny]
+}
+
+// Request.swift
+
+// Postman Echo is service you can use to test your REST clients and make sample API calls.
+// It provides endpoints for `GET`, `POST`, `PUT`, various auth mechanisms and other utility
+// endpoints.
+//
+// The documentation for the endpoints as well as example responses can be found at
+// [https://postman-echo.com](https://postman-echo.com/?source=echo-collection-app-onboarding)
+
+import Foundation
+
+// MARK: - Request
+struct Request: Codable {
+    let auth: Auth?
+    let method: String
+    let header: [Header]
+    let url: URLClass?
+}
+
+// Auth.swift
+
+// Postman Echo is service you can use to test your REST clients and make sample API calls.
+// It provides endpoints for `GET`, `POST`, `PUT`, various auth mechanisms and other utility
+// endpoints.
+//
+// The documentation for the endpoints as well as example responses can be found at
+// [https://postman-echo.com](https://postman-echo.com/?source=echo-collection-app-onboarding)
+
+import Foundation
+
+// MARK: - Auth
+struct Auth: Codable {
+    let type: String
+    let bearer: [Header]
+}
+
+// Header.swift
+
+// Postman Echo is service you can use to test your REST clients and make sample API calls.
+// It provides endpoints for `GET`, `POST`, `PUT`, various auth mechanisms and other utility
+// endpoints.
+//
+// The documentation for the endpoints as well as example responses can be found at
+// [https://postman-echo.com](https://postman-echo.com/?source=echo-collection-app-onboarding)
+
+import Foundation
+
+// MARK: - Header
+struct Header: Codable {
+    let key: Key
+    let value: String
+    let type: TypeEnum
+}
+
+// Key.swift
+
+import Foundation
+
+enum Key: String, Codable {
+    case empty = ""
+    case token = "token"
+}
+
+// TypeEnum.swift
+
+import Foundation
+
+enum TypeEnum: String, Codable {
+    case string = "string"
+    case text = "text"
+}
+
+// URLClass.swift
+
+// Postman Echo is service you can use to test your REST clients and make sample API calls.
+// It provides endpoints for `GET`, `POST`, `PUT`, various auth mechanisms and other utility
+// endpoints.
+//
+// The documentation for the endpoints as well as example responses can be found at
+// [https://postman-echo.com](https://postman-echo.com/?source=echo-collection-app-onboarding)
+
+import Foundation
+
+// MARK: - URLClass
+struct URLClass: Codable {
+    let raw: String
+    let urlProtocol: String
+    let host: [Host]
+    let path: [String]
+    let query: [Query]?
+
+    enum CodingKeys: String, CodingKey {
+        case raw
+        case urlProtocol = "protocol"
+        case host, path, query
+    }
+}
+
+// Host.swift
+
+import Foundation
+
+enum Host: String, Codable {
+    case api = "api"
+    case com = "com"
+    case spotify = "spotify"
+}
+
+// Query.swift
+
+// Postman Echo is service you can use to test your REST clients and make sample API calls.
+// It provides endpoints for `GET`, `POST`, `PUT`, various auth mechanisms and other utility
+// endpoints.
+//
+// The documentation for the endpoints as well as example responses can be found at
+// [https://postman-echo.com](https://postman-echo.com/?source=echo-collection-app-onboarding)
+
+import Foundation
+
+// MARK: - Query
+struct Query: Codable {
+    let key, value: String
+}
+
+// JSONSchemaSupport.swift
+
 import Foundation
 
 // MARK: - Encode/decode helpers
 
-public class JSONNull: Codable, Hashable {
+class JSONNull: Codable, Hashable {
 
     public static func == (lhs: JSONNull, rhs: JSONNull) -> Bool {
         return true
@@ -47,9 +255,9 @@ class JSONCodingKey: CodingKey {
     }
 }
 
-public class JSONAny: Codable {
+class JSONAny: Codable {
 
-    public let value: Any
+    let value: Any
 
     static func decodingError(forCodingPath codingPath: [CodingKey]) -> DecodingError {
         let context = DecodingError.Context(codingPath: codingPath, debugDescription: "Cannot decode JSONAny")

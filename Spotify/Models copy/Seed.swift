@@ -12,7 +12,7 @@ public struct Seed: Codable {
     public let afterRelinkingSize: Int
     public let id: String
     public let type: String
-    public let href: JSONNull?
+    public let href: String?
 
     enum CodingKeys: String, CodingKey {
         case initialPoolSize
@@ -23,7 +23,7 @@ public struct Seed: Codable {
         case href
     }
 
-    public init(initialPoolSize: Int, afterFilteringSize: Int, afterRelinkingSize: Int, id: String, type: String, href: JSONNull?) {
+    public init(initialPoolSize: Int, afterFilteringSize: Int, afterRelinkingSize: Int, id: String, type: String, href: String) {
         self.initialPoolSize = initialPoolSize
         self.afterFilteringSize = afterFilteringSize
         self.afterRelinkingSize = afterRelinkingSize

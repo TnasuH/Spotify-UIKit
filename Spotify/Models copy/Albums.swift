@@ -1,16 +1,16 @@
 // This file was generated from JSON Schema using quicktype, do not modify it directly.
 // To parse the JSON, add this file to your project and do:
 //
-//   let playlists = try? newJSONDecoder().decode(Playlists.self, from: jsonData)
+//   let albums = try? newJSONDecoder().decode(Albums.self, from: jsonData)
 
 import Foundation
 
-// MARK: - Playlists
-public struct Playlists: Codable {
+// MARK: - Albums
+public struct Albums: Codable {
     public let href: String
-    public let items: [PlaylistsItem]
+    public let items: [AlbumElement]
     public let limit: Int
-    public let next: JSONNull?
+    public let next: String
     public let offset: Int
     public let previous: JSONNull?
     public let total: Int
@@ -25,7 +25,7 @@ public struct Playlists: Codable {
         case total
     }
 
-    public init(href: String, items: [PlaylistsItem], limit: Int, next: JSONNull?, offset: Int, previous: JSONNull?, total: Int) {
+    public init(href: String, items: [AlbumElement], limit: Int, next: String, offset: Int, previous: JSONNull?, total: Int) {
         self.href = href
         self.items = items
         self.limit = limit

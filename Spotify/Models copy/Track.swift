@@ -7,61 +7,61 @@ import Foundation
 
 // MARK: - Track
 public struct Track: Codable {
-    public let artists: [Artist]
-    public let availableMarkets: [String]?
+    public let album: AlbumElement?
+    public let artists: [Owner]
     public let discNumber: Int?
     public let durationms: Int?
-    public let explicit: Bool
+    public let explicit: Bool?
+    public let externalids: Externalids?
     public let externalUrls: ExternalUrls?
-    public let href: String
-    public let id: String
+    public let href: String?
+    public let id: String?
     public let isLocal: Bool?
-    public let name: String
+    public let isPlayable: Bool?
+    public let name: String?
+    public let popularity: Int?
     public let previewurl: String?
     public let trackNumber: Int?
-    public let type: TrackType
-    public let uri: String
-    public let album: AlbumElement?
-    public let externalids: TrackExternalids?
-    public let popularity: Int?
+    public let type: TrackType?
+    public let uri: String?
 
     enum CodingKeys: String, CodingKey {
+        case album
         case artists
-        case availableMarkets
         case discNumber
         case durationms
         case explicit
+        case externalids
         case externalUrls
         case href
         case id
         case isLocal
+        case isPlayable
         case name
+        case popularity
         case previewurl
         case trackNumber
         case type
         case uri
-        case album
-        case externalids
-        case popularity
     }
 
-    public init(artists: [Artist], availableMarkets: [String], discNumber: Int, durationms: Int, explicit: Bool, externalUrls: ExternalUrls, href: String, id: String, isLocal: Bool, name: String, previewurl: String?, trackNumber: Int, type: TrackType, uri: String, album: AlbumElement?, externalids: TrackExternalids?, popularity: Int?) {
+    public init(album: AlbumElement, artists: [Owner], discNumber: Int, durationms: Int, explicit: Bool, externalids: Externalids, externalUrls: ExternalUrls, href: String, id: String, isLocal: Bool, isPlayable: Bool, name: String, popularity: Int, previewurl: String?, trackNumber: Int, type: TrackType, uri: String) {
+        self.album = album
         self.artists = artists
-        self.availableMarkets = availableMarkets
         self.discNumber = discNumber
         self.durationms = durationms
         self.explicit = explicit
+        self.externalids = externalids
         self.externalUrls = externalUrls
         self.href = href
         self.id = id
         self.isLocal = isLocal
+        self.isPlayable = isPlayable
         self.name = name
+        self.popularity = popularity
         self.previewurl = previewurl
         self.trackNumber = trackNumber
         self.type = type
         self.uri = uri
-        self.album = album
-        self.externalids = externalids
-        self.popularity = popularity
     }
 }

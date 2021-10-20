@@ -14,12 +14,12 @@ public struct PlaylistsItem: Codable {
     public let id: String
     public let images: [Image]
     public let name: String
-    public let owner: Artist
+    public let owner: Owner
     public let primaryColor: JSONNull?
     public let itemPublic: JSONNull?
     public let snapshotid: String?
     public let tracks: Followers
-    public let type: PurpleType
+    public let type: String
     public let uri: String
 
     enum CodingKeys: String, CodingKey {
@@ -39,7 +39,7 @@ public struct PlaylistsItem: Codable {
         case uri
     }
 
-    public init(collaborative: Bool, itemDescription: String, externalUrls: ExternalUrls, href: String, id: String, images: [Image], name: String, owner: Artist, primaryColor: JSONNull?, itemPublic: JSONNull?, snapshotid: String, tracks: Followers, type: PurpleType, uri: String) {
+    public init(collaborative: Bool, itemDescription: String, externalUrls: ExternalUrls, href: String, id: String, images: [Image], name: String, owner: Owner, primaryColor: JSONNull?, itemPublic: JSONNull?, snapshotid: String?, tracks: Followers, type: String, uri: String) {
         self.collaborative = collaborative
         self.itemDescription = itemDescription
         self.externalUrls = externalUrls

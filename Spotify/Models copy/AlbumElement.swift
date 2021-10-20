@@ -8,7 +8,7 @@ import Foundation
 // MARK: - AlbumElement
 public struct AlbumElement: Codable {
     public let albumType: AlbumTypeEnum?
-    public let artists: [Artist]
+    public let artists: [Owner]
     public let availableMarkets: [String]?
     public let externalUrls: ExternalUrls?
     public let href: String
@@ -20,6 +20,8 @@ public struct AlbumElement: Codable {
     public let totalTracks: Int?
     public let type: AlbumTypeEnum
     public let uri: String
+    public let items: [Track]?
+    
 
     enum CodingKeys: String, CodingKey {
         case albumType
@@ -35,9 +37,10 @@ public struct AlbumElement: Codable {
         case totalTracks
         case type
         case uri
+        case items
     }
 
-    public init(albumType: AlbumTypeEnum, artists: [Artist], availableMarkets: [String], externalUrls: ExternalUrls, href: String, id: String, images: [Image], name: String, releaseDate: String, releaseDatePrecision: ReleaseDatePrecision, totalTracks: Int, type: AlbumTypeEnum, uri: String) {
+    public init(albumType: AlbumTypeEnum, artists: [Owner], availableMarkets: [String]?, externalUrls: ExternalUrls, href: String, id: String, images: [Image], name: String, releaseDate: String?, releaseDatePrecision: ReleaseDatePrecision, totalTracks: Int, type: AlbumTypeEnum, uri: String, tracks: [Track]) {
         self.albumType = albumType
         self.artists = artists
         self.availableMarkets = availableMarkets
@@ -51,5 +54,6 @@ public struct AlbumElement: Codable {
         self.totalTracks = totalTracks
         self.type = type
         self.uri = uri
+        self.items = tracks
     }
 }
