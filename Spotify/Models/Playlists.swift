@@ -2,6 +2,15 @@
 // To parse the JSON, add this file to your project and do:
 //
 //   let playlists = try? newJSONDecoder().decode(Playlists.self, from: jsonData)
+//
+// To read values from URLs:
+//
+//   let task = URLSession.shared.playlistsTask(with: url) { playlists, response, error in
+//     if let playlists = playlists {
+//       ...
+//     }
+//   }
+//   task.resume()
 
 import Foundation
 
@@ -16,13 +25,13 @@ public struct Playlists: Codable {
     public let total: Int
 
     enum CodingKeys: String, CodingKey {
-        case href
-        case items
-        case limit
-        case next
-        case offset
-        case previous
-        case total
+        case href = "href"
+        case items = "items"
+        case limit = "limit"
+        case next = "next"
+        case offset = "offset"
+        case previous = "previous"
+        case total = "total"
     }
 
     public init(href: String, items: [PlaylistsItem], limit: Int, next: JSONNull?, offset: Int, previous: JSONNull?, total: Int) {

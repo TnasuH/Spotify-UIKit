@@ -1,5 +1,69 @@
 import Foundation
 
+// MARK: - Helper functions for creating encoders and decoders
+
+func newJSONDecoder() -> JSONDecoder {
+    let decoder = JSONDecoder()
+    if #available(iOS 10.0, OSX 10.12, tvOS 10.0, watchOS 3.0, *) {
+        decoder.dateDecodingStrategy = .iso8601
+    }
+    return decoder
+}
+
+func newJSONEncoder() -> JSONEncoder {
+    let encoder = JSONEncoder()
+    if #available(iOS 10.0, OSX 10.12, tvOS 10.0, watchOS 3.0, *) {
+        encoder.dateEncodingStrategy = .iso8601
+    }
+    return encoder
+}
+
+// MARK: - URLSession response handlers
+
+public extension URLSession {
+    fileprivate func codableTask<T: Codable>(with url: URL, completionHandler: @escaping (T?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+        return self.dataTask(with: url) { data, response, error in
+            guard let data = data, error == nil else {
+                completionHandler(nil, response, error)
+                return
+            }
+            completionHandler(try? newJSONDecoder().decode(T.self, from: data), response, nil)
+        }
+    }
+
+    func getPlaylistsTask(with url: URL, completionHandler: @escaping (GetPlaylists?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+        return self.codableTask(with: url, completionHandler: completionHandler)
+    }
+
+    func featuredPlaylistsTask(with url: URL, completionHandler: @escaping (FeaturedPlaylists?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+        return self.codableTask(with: url, completionHandler: completionHandler)
+    }
+
+    func genreSeedsTask(with url: URL, completionHandler: @escaping (GenreSeeds?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+        return self.codableTask(with: url, completionHandler: completionHandler)
+    }
+
+    func getAlbumsTask(with url: URL, completionHandler: @escaping (GetAlbums?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+        return self.codableTask(with: url, completionHandler: completionHandler)
+    }
+
+    func getArtistTask(with url: URL, completionHandler: @escaping (GetArtist?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+        return self.codableTask(with: url, completionHandler: completionHandler)
+    }
+
+    func getCurrentProfileTask(with url: URL, completionHandler: @escaping (GetCurrentProfile?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+        return self.codableTask(with: url, completionHandler: completionHandler)
+    }
+
+    func newReleasesTask(with url: URL, completionHandler: @escaping (NewReleases?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+        return self.codableTask(with: url, completionHandler: completionHandler)
+    }
+
+    func recommendationsTask(with url: URL, completionHandler: @escaping (Recommendations?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+        return self.codableTask(with: url, completionHandler: completionHandler)
+    }
+}
+
 // MARK: - Encode/decode helpers
 
 public class JSONNull: Codable, Hashable {

@@ -2,6 +2,15 @@
 // To parse the JSON, add this file to your project and do:
 //
 //   let getArtist = try? newJSONDecoder().decode(GetArtist.self, from: jsonData)
+//
+// To read values from URLs:
+//
+//   let task = URLSession.shared.getArtistTask(with: url) { getArtist, response, error in
+//     if let getArtist = getArtist {
+//       ...
+//     }
+//   }
+//   task.resume()
 
 import Foundation
 
@@ -15,23 +24,23 @@ public struct GetArtist: Codable {
     public let images: [Image]
     public let name: String
     public let popularity: Int
-    public let type: ArtistType
+    public let type: OwnerType
     public let uri: String
 
     enum CodingKeys: String, CodingKey {
-        case externalUrls
-        case followers
-        case genres
-        case href
-        case id
-        case images
-        case name
-        case popularity
-        case type
-        case uri
+        case externalUrls = "external_urls"
+        case followers = "followers"
+        case genres = "genres"
+        case href = "href"
+        case id = "id"
+        case images = "images"
+        case name = "name"
+        case popularity = "popularity"
+        case type = "type"
+        case uri = "uri"
     }
 
-    public init(externalUrls: ExternalUrls, followers: Followers, genres: [String], href: String, id: String, images: [Image], name: String, popularity: Int, type: ArtistType, uri: String) {
+    public init(externalUrls: ExternalUrls, followers: Followers, genres: [String], href: String, id: String, images: [Image], name: String, popularity: Int, type: OwnerType, uri: String) {
         self.externalUrls = externalUrls
         self.followers = followers
         self.genres = genres

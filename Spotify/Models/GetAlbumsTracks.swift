@@ -1,12 +1,12 @@
 // This file was generated from JSON Schema using quicktype, do not modify it directly.
 // To parse the JSON, add this file to your project and do:
 //
-//   let albums = try? newJSONDecoder().decode(Albums.self, from: jsonData)
+//   let getAlbumsTracks = try? newJSONDecoder().decode(GetAlbumsTracks.self, from: jsonData)
 //
 // To read values from URLs:
 //
-//   let task = URLSession.shared.albumsTask(with: url) { albums, response, error in
-//     if let albums = albums {
+//   let task = URLSession.shared.getAlbumsTracksTask(with: url) { getAlbumsTracks, response, error in
+//     if let getAlbumsTracks = getAlbumsTracks {
 //       ...
 //     }
 //   }
@@ -14,12 +14,12 @@
 
 import Foundation
 
-// MARK: - Albums
-public struct Albums: Codable {
+// MARK: - GetAlbumsTracks
+public struct GetAlbumsTracks: Codable {
     public let href: String
-    public let items: [AlbumElement]
+    public let items: [FluffyItem]
     public let limit: Int
-    public let next: String
+    public let next: JSONNull?
     public let offset: Int
     public let previous: JSONNull?
     public let total: Int
@@ -34,7 +34,7 @@ public struct Albums: Codable {
         case total = "total"
     }
 
-    public init(href: String, items: [AlbumElement], limit: Int, next: String, offset: Int, previous: JSONNull?, total: Int) {
+    public init(href: String, items: [FluffyItem], limit: Int, next: JSONNull?, offset: Int, previous: JSONNull?, total: Int) {
         self.href = href
         self.items = items
         self.limit = limit

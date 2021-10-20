@@ -2,6 +2,15 @@
 // To parse the JSON, add this file to your project and do:
 //
 //   let externalUrls = try? newJSONDecoder().decode(ExternalUrls.self, from: jsonData)
+//
+// To read values from URLs:
+//
+//   let task = URLSession.shared.externalUrlsTask(with: url) { externalUrls, response, error in
+//     if let externalUrls = externalUrls {
+//       ...
+//     }
+//   }
+//   task.resume()
 
 import Foundation
 
@@ -10,7 +19,7 @@ public struct ExternalUrls: Codable {
     public let spotify: String
 
     enum CodingKeys: String, CodingKey {
-        case spotify
+        case spotify = "spotify"
     }
 
     public init(spotify: String) {

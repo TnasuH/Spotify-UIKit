@@ -2,6 +2,15 @@
 // To parse the JSON, add this file to your project and do:
 //
 //   let getCurrentProfile = try? newJSONDecoder().decode(GetCurrentProfile.self, from: jsonData)
+//
+// To read values from URLs:
+//
+//   let task = URLSession.shared.getCurrentProfileTask(with: url) { getCurrentProfile, response, error in
+//     if let getCurrentProfile = getCurrentProfile {
+//       ...
+//     }
+//   }
+//   task.resume()
 
 import Foundation
 
@@ -17,25 +26,25 @@ public struct GetCurrentProfile: Codable {
     public let id: String
     public let images: [Image]
     public let product: String
-    public let type: ArtistType
+    public let type: OwnerType
     public let uri: String
 
     enum CodingKeys: String, CodingKey {
-        case country
-        case displayName
-        case email
-        case explicitContent
-        case externalUrls
-        case followers
-        case href
-        case id
-        case images
-        case product
-        case type
-        case uri
+        case country = "country"
+        case displayName = "display_name"
+        case email = "email"
+        case explicitContent = "explicit_content"
+        case externalUrls = "external_urls"
+        case followers = "followers"
+        case href = "href"
+        case id = "id"
+        case images = "images"
+        case product = "product"
+        case type = "type"
+        case uri = "uri"
     }
 
-    public init(country: String, displayName: String, email: String, explicitContent: ExplicitContent, externalUrls: ExternalUrls, followers: Followers, href: String, id: String, images: [Image], product: String, type: ArtistType, uri: String) {
+    public init(country: String, displayName: String, email: String, explicitContent: ExplicitContent, externalUrls: ExternalUrls, followers: Followers, href: String, id: String, images: [Image], product: String, type: OwnerType, uri: String) {
         self.country = country
         self.displayName = displayName
         self.email = email

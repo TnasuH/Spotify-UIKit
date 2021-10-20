@@ -2,42 +2,51 @@
 // To parse the JSON, add this file to your project and do:
 //
 //   let albumElement = try? newJSONDecoder().decode(AlbumElement.self, from: jsonData)
+//
+// To read values from URLs:
+//
+//   let task = URLSession.shared.albumElementTask(with: url) { albumElement, response, error in
+//     if let albumElement = albumElement {
+//       ...
+//     }
+//   }
+//   task.resume()
 
 import Foundation
 
 // MARK: - AlbumElement
 public struct AlbumElement: Codable {
-    public let albumType: AlbumTypeEnum?
-    public let artists: [Artist]
-    public let availableMarkets: [String]?
-    public let externalUrls: ExternalUrls?
+    public let albumType: AlbumTypeEnum
+    public let artists: [Owner]
+    public let availableMarkets: [String]
+    public let externalUrls: ExternalUrls
     public let href: String
     public let id: String
     public let images: [Image]
     public let name: String
-    public let releaseDate: String?
-    public let releaseDatePrecision: ReleaseDatePrecision?
-    public let totalTracks: Int?
+    public let releaseDate: String
+    public let releaseDatePrecision: ReleaseDatePrecision
+    public let totalTracks: Int
     public let type: AlbumTypeEnum
     public let uri: String
 
     enum CodingKeys: String, CodingKey {
-        case albumType
-        case artists
-        case availableMarkets
-        case externalUrls
-        case href
-        case id
-        case images
-        case name
-        case releaseDate
-        case releaseDatePrecision
-        case totalTracks
-        case type
-        case uri
+        case albumType = "album_type"
+        case artists = "artists"
+        case availableMarkets = "available_markets"
+        case externalUrls = "external_urls"
+        case href = "href"
+        case id = "id"
+        case images = "images"
+        case name = "name"
+        case releaseDate = "release_date"
+        case releaseDatePrecision = "release_date_precision"
+        case totalTracks = "total_tracks"
+        case type = "type"
+        case uri = "uri"
     }
 
-    public init(albumType: AlbumTypeEnum, artists: [Artist], availableMarkets: [String], externalUrls: ExternalUrls, href: String, id: String, images: [Image], name: String, releaseDate: String, releaseDatePrecision: ReleaseDatePrecision, totalTracks: Int, type: AlbumTypeEnum, uri: String) {
+    public init(albumType: AlbumTypeEnum, artists: [Owner], availableMarkets: [String], externalUrls: ExternalUrls, href: String, id: String, images: [Image], name: String, releaseDate: String, releaseDatePrecision: ReleaseDatePrecision, totalTracks: Int, type: AlbumTypeEnum, uri: String) {
         self.albumType = albumType
         self.artists = artists
         self.availableMarkets = availableMarkets

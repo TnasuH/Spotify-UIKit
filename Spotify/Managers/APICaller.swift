@@ -44,7 +44,29 @@ final class APICaller {
         }
     }
     
-    // MARK: - Playlist
+    // MARK: - Playlists
+    public func getPlaylists(for playlistsId: String, completion: @escaping (Result<GetPlaylists, Error>) -> Void) {
+        print("id \(playlistsId)")
+        print(Constants.baseAPIURL + "/playlists/" + playlistsId)
+        createRequest(with: URL(string: Constants.baseAPIURL + "/playlists/" + playlistsId), type: .GET) { request in
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                do {
+                    let res = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+                    let result = try JSONDecoder().decode(GetPlaylists.self, from: data)
+                    completion(.success(result))
+                }
+                catch {
+                    print(error)
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
+    }
     
     // MARK: - Browse API
     
@@ -166,6 +188,8 @@ final class APICaller {
             var request = URLRequest(url: apiURL)
             print(token)
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            request.setValue("application/json", forHTTPHeaderField: "Accept")
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.httpMethod = type.rawValue
             request.timeoutInterval = 30
             completion(request)

@@ -2,6 +2,15 @@
 // To parse the JSON, add this file to your project and do:
 //
 //   let recommendations = try? newJSONDecoder().decode(Recommendations.self, from: jsonData)
+//
+// To read values from URLs:
+//
+//   let task = URLSession.shared.recommendationsTask(with: url) { recommendations, response, error in
+//     if let recommendations = recommendations {
+//       ...
+//     }
+//   }
+//   task.resume()
 
 import Foundation
 
@@ -11,8 +20,8 @@ public struct Recommendations: Codable {
     public let seeds: [Seed]
 
     enum CodingKeys: String, CodingKey {
-        case tracks
-        case seeds
+        case tracks = "tracks"
+        case seeds = "seeds"
     }
 
     public init(tracks: [Track], seeds: [Seed]) {
