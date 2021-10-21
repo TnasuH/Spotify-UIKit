@@ -16,7 +16,7 @@ import Foundation
 
 // MARK: - AlbumElement
 public struct AlbumElement: Codable {
-    public let albumType: AlbumTypeEnum
+    public let albumType: String
     public let artists: [Owner]
     public let availableMarkets: [String]
     public let externalUrls: ExternalUrls
@@ -27,7 +27,7 @@ public struct AlbumElement: Codable {
     public let releaseDate: String
     public let releaseDatePrecision: ReleaseDatePrecision
     public let totalTracks: Int
-    public let type: AlbumTypeEnum
+    public let type: AlbumTypeEnum?
     public let uri: String
 
     enum CodingKeys: String, CodingKey {
@@ -46,7 +46,7 @@ public struct AlbumElement: Codable {
         case uri = "uri"
     }
 
-    public init(albumType: AlbumTypeEnum, artists: [Owner], availableMarkets: [String], externalUrls: ExternalUrls, href: String, id: String, images: [Image], name: String, releaseDate: String, releaseDatePrecision: ReleaseDatePrecision, totalTracks: Int, type: AlbumTypeEnum, uri: String) {
+    public init(albumType: String, artists: [Owner], availableMarkets: [String], externalUrls: ExternalUrls, href: String, id: String, images: [Image], name: String, releaseDate: String, releaseDatePrecision: ReleaseDatePrecision, totalTracks: Int, type: AlbumTypeEnum?, uri: String) {
         self.albumType = albumType
         self.artists = artists
         self.availableMarkets = availableMarkets
