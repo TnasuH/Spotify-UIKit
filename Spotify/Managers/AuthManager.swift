@@ -183,6 +183,7 @@ final class AuthManager {
             return
         }
         req.setValue("Basic \(base64String)", forHTTPHeaderField: "Authorization")
+        print("base64String")
         req.httpBody = components.query?.data(using: .utf8)
         
         let task = URLSession.shared.dataTask(with: req) {[weak self] data, urlResponse, error in
@@ -202,7 +203,7 @@ final class AuthManager {
                 completion?(true)
             }
             catch{
-                print("Err!: \(error.localizedDescription)")
+                print("Err!: \(error)")
                 completion?(false)
             }
         }

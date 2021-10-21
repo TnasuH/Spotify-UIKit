@@ -22,20 +22,45 @@ final class APICaller {
         case failedToGetData
     }
     
-    // MARK: - Browse API
+    // MARK: - Albums
     
-    public func getNewReleases(completion: @escaping (Result<NewReleaseResponse, Error>) -> Void) {
-        createRequest(with: URL(string: Constants.baseAPIURL + "/browse/new-releases?limit=50"), type: .GET) { request in
-            let task = URLSession.shared.dataTask(with: request) { data, urlResponse, error in
+    public func getAlbumDetail(for albumId: String, completion: @escaping (Result<GetAlbums,Error>) -> Void) {
+        createRequest(with: URL(string: Constants.baseAPIURL + "/albums/" + albumId), type: .GET)
+        { request in
+            let task = URLSession.shared.dataTask(with: request, completionHandler: { data, _, error in
                 guard let data = data, error == nil else {
                     completion(.failure(APIError.failedToGetData))
                     return
                 }
                 do {
-                    let result = try JSONDecoder().decode(NewReleaseResponse.self, from: data)
+                    let result = try JSONDecoder().decode(GetAlbums.self, from: data)
                     completion(.success(result))
                 } catch {
-                    print("Err!: \(error.localizedDescription)")
+                    print(error)
+                    completion(.failure(error))
+                }
+            })
+            task.resume()
+        }
+    }
+    
+    // MARK: - Playlists
+    public func getPlaylists(for playlistsId: String, completion: @escaping (Result<GetPlaylists, Error>) -> Void) {
+        print("id \(playlistsId)")
+        print(Constants.baseAPIURL + "/playlists/" + playlistsId)
+        createRequest(with: URL(string: Constants.baseAPIURL + "/playlists/" + playlistsId), type: .GET) { request in
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                do {
+                    let res = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+                    let result = try JSONDecoder().decode(GetPlaylists.self, from: data)
+                    completion(.success(result))
+                }
+                catch {
+                    print(error)
                     completion(.failure(error))
                 }
             }
@@ -43,7 +68,28 @@ final class APICaller {
         }
     }
     
-    public func getAllFeaturedPlaylists(completion: @escaping (Result<FeaturedPlaylistResponse, Error>) -> Void) {
+    // MARK: - Browse API
+    
+    public func getNewReleases(completion: @escaping (Result<NewReleases, Error>) -> Void) {
+        createRequest(with: URL(string: Constants.baseAPIURL + "/browse/new-releases?limit=50"), type: .GET) { request in
+            let task = URLSession.shared.dataTask(with: request) { data, urlResponse, error in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                do {
+                    let result = try JSONDecoder().decode(NewReleases.self, from: data)
+                    completion(.success(result))
+                } catch {
+                    print("Err!: \(error)")
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
+    }
+    
+    public func getAllFeaturedPlaylists(completion: @escaping (Result<FeaturedPlaylists, Error>) -> Void) {
         createRequest(with: URL(string: Constants.baseAPIURL + "/browse/featured-playlists?limit=20"), type: .GET) { baseRequest in
             let task = URLSession.shared.dataTask(with: baseRequest) { data, urlResponse, error in
                 guard let data = data, error == nil else {
@@ -51,11 +97,11 @@ final class APICaller {
                     return
                 }
                 do {
-                    let res = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
-                    let result = try JSONDecoder().decode(FeaturedPlaylistResponse.self, from: data)
+                    let result = try JSONDecoder().decode(FeaturedPlaylists.self, from: data)
                     completion(.success(result))
                 }
                 catch {
+                    print(error)
                     completion(.failure(error))
                 }
             }
@@ -82,21 +128,21 @@ final class APICaller {
                 }
             }
     
-    public func getRecommendations(genres: Set<String>, completion: @escaping (Result<RecommendationsResponse, Error>) -> Void) {
+    public func getRecommendations(genres: Set<String>, completion: @escaping (Result<Recommendations, Error>) -> Void) {
         let seeds = genres.joined(separator: ",")
         createRequest(with: URL(string: Constants.baseAPIURL + "/recommendations?limit=10&seed_genres=\(seeds)"),
                       type: .GET) { request in
-            print("baseRequest is: \(request.url?.absoluteString)")
             let task = URLSession.shared.dataTask(with: request) { data, urlResponse, error in
                 guard let data = data, error == nil else {
                     completion(.failure(APIError.failedToGetData))
                     return
                 }
                 do {
-                    let result = try JSONDecoder().decode(RecommendationsResponse.self, from: data)
+                    let result = try JSONDecoder().decode(Recommendations.self, from: data)
                     completion(.success(result))
                 }
                 catch {
+                    print(error)
                     completion(.failure(error))
                 }
             }
@@ -140,7 +186,10 @@ final class APICaller {
         AuthManager.shared.withValidToken { token in
             guard let apiURL = url else { return }
             var request = URLRequest(url: apiURL)
+            print(token)
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            request.setValue("application/json", forHTTPHeaderField: "Accept")
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.httpMethod = type.rawValue
             request.timeoutInterval = 30
             completion(request)

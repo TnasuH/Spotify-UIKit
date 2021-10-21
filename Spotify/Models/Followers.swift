@@ -2,6 +2,15 @@
 // To parse the JSON, add this file to your project and do:
 //
 //   let followers = try? newJSONDecoder().decode(Followers.self, from: jsonData)
+//
+// To read values from URLs:
+//
+//   let task = URLSession.shared.followersTask(with: url) { followers, response, error in
+//     if let followers = followers {
+//       ...
+//     }
+//   }
+//   task.resume()
 
 import Foundation
 
@@ -11,8 +20,8 @@ public struct Followers: Codable {
     public let total: Int
 
     enum CodingKeys: String, CodingKey {
-        case href
-        case total
+        case href = "href"
+        case total = "total"
     }
 
     public init(href: String?, total: Int) {

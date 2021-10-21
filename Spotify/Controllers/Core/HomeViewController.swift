@@ -15,6 +15,11 @@ enum BrowseSectionType {
 
 class HomeViewController: UIViewController {
     
+    private var newAlbums: [AlbumElement] = []
+    private var playList: [PlaylistsItem] = []
+    private var tracks: [Track] = []
+    
+    
     private let collectionView: UICollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionViewCompositionalLayout { sectionIndex, _ -> NSCollectionLayoutSection? in
@@ -62,9 +67,9 @@ class HomeViewController: UIViewController {
         group.enter()
         group.enter()
         
-        var newReleases: NewReleaseResponse?
-        var featuredPlayList: FeaturedPlaylistResponse?
-        var recommendations: RecommendationsResponse?
+        var newReleases: NewReleases?
+        var featuredPlayList: FeaturedPlaylists?
+        var recommendations: Recommendations?
         
         // New Release
         APICaller.shared.getNewReleases { result in
@@ -75,7 +80,7 @@ class HomeViewController: UIViewController {
             case .success(let model):
                 newReleases = model
             case .failure(let error):
-                print("Err!: \(error.localizedDescription)")
+                print("Err!: \(error)")
             }
         }
         
@@ -89,7 +94,7 @@ class HomeViewController: UIViewController {
                 featuredPlayList = model
                 break
             case .failure(let error):
-                print("Err!: \(error.localizedDescription)")
+                print("Err!: \(error)")
                 break
             }
         }
@@ -117,17 +122,17 @@ class HomeViewController: UIViewController {
                     case .success(let model):
                         recommendations = model
                     case .failure(let error):
-                        print("Err!: \(error.localizedDescription)")
+                        print("Err!: \(error)")
                     }
                 }
             case .failure(let error):
-                print("Err!: \(error.localizedDescription)")
+                print("Err!: \(error)")
             }
         }
         
         group.notify(queue: .main) {
             guard let releases = newReleases?.albums.items,
-                  let playList = featuredPlayList?.playlists?.items,
+                  let playList = featuredPlayList?.playlists.items,
                   let tracks = recommendations else {
                       fatalError("Models are nil")
                       return
@@ -141,7 +146,9 @@ class HomeViewController: UIViewController {
         playList: [PlaylistsItem],
         tracks: [Track]
     ) {
-        
+        self.newAlbums = newAlbums
+        self.playList = playList
+        self.tracks = tracks
         // Configure Models
         sections.append(.newReleases(viewModel: newAlbums.compactMap({
             ///During development, api was updated and the numberOfTracks value started to come in nil.
@@ -158,14 +165,14 @@ class HomeViewController: UIViewController {
             return FeaturedPlaylistCellViewModel(
                 name: $0.name,
                 artworkURL: URL(string: $0.images.first?.url ?? ""),
-                creatorName: $0.owner.displayName ?? $0.owner.id
+                creatorName: $0.owner.name ?? $0.owner.id
             )
         })))
         sections.append(.recommandedTracks(viewModel: tracks.compactMap({
             return RecommendedTrackCellViewModel(
-                name: $0.name ?? "",
+                name: $0.name ,
                 artistName: $0.artists.first?.name ?? "-",
-                artworkURL: URL(string: $0.album?.images.first?.url ?? "")
+                artworkURL: URL(string: $0.album.images.first?.url ?? "")
             )
         })))
         collectionView.reloadData()
@@ -229,8 +236,31 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             cell.configure(with: viewModels[indexPath.row])
             return cell
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        let section = sections[indexPath.section]
+        switch section {
+        case .featuredPlaylist:
+            let playlist = playList[indexPath.row]
+            let vc = PlaylistViewController(playlist: playlist)
+            vc.title = playlist.name
+            vc.navigationItem.largeTitleDisplayMode = .never
+            navigationController?.pushViewController(vc, animated: true)
+             break
+        case .recommandedTracks:
+            break
+        case .newReleases:
+            let album = newAlbums[indexPath.row]
+            let vc = AlbumViewController(albumId: album.id)
+            vc.title = album.name
+            vc.navigationItem.largeTitleDisplayMode = .never
+            navigationController?.pushViewController(vc, animated: true)
+            
+            break
+        }
         
-       
     }
     
     private static func createSectionLayout(section: Int) -> NSCollectionLayoutSection {
