@@ -63,6 +63,7 @@
 		2E5F36F42721EC6D009F95C5 /* PlaylistHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5F36F32721EC6D009F95C5 /* PlaylistHeaderCollectionReusableView.swift */; };
 		2E5F36F62721F092009F95C5 /* PlaylistHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5F36F52721F092009F95C5 /* PlaylistHeaderViewModel.swift */; };
 		2E8B2DEF271E2E64002BC5C0 /* NewReleasesCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8B2DEE271E2E64002BC5C0 /* NewReleasesCellViewModel.swift */; };
+		2E93182B272359B300010828 /* TitleHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E93182A272359B300010828 /* TitleHeaderCollectionReusableView.swift */; };
 		2EA344F1271CF549008CE5C7 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA344F0271CF549008CE5C7 /* TabBarViewController.swift */; };
 		2EA344F3271CF568008CE5C7 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA344F2271CF568008CE5C7 /* SearchViewController.swift */; };
 		2EA344F6271CF590008CE5C7 /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA344F5271CF590008CE5C7 /* LibraryViewController.swift */; };
@@ -140,6 +141,7 @@
 		2E5F36F32721EC6D009F95C5 /* PlaylistHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		2E5F36F52721F092009F95C5 /* PlaylistHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistHeaderViewModel.swift; sourceTree = "<group>"; };
 		2E8B2DEE271E2E64002BC5C0 /* NewReleasesCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReleasesCellViewModel.swift; sourceTree = "<group>"; };
+		2E93182A272359B300010828 /* TitleHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		2EA344F0271CF549008CE5C7 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		2EA344F2271CF568008CE5C7 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		2EA344F5271CF590008CE5C7 /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 				2E247671271E260C00FDEB09 /* Browse */,
 				2E07529D271CF16D008CC5AB /* LaunchScreen.storyboard */,
 				2E5F36F32721EC6D009F95C5 /* PlaylistHeaderCollectionReusableView.swift */,
+				2E93182A272359B300010828 /* TitleHeaderCollectionReusableView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -490,6 +493,7 @@
 				2E5F36D427209EFC009F95C5 /* GetAlbumsTracks.swift in Sources */,
 				2E5F36ED27209EFC009F95C5 /* PurpleItem.swift in Sources */,
 				2E5F36D527209EFC009F95C5 /* Recommendations.swift in Sources */,
+				2E93182B272359B300010828 /* TitleHeaderCollectionReusableView.swift in Sources */,
 				2EA34500271CF61F008CE5C7 /* ProfileViewController.swift in Sources */,
 				2EA344F1271CF549008CE5C7 /* TabBarViewController.swift in Sources */,
 				2EA3450C271CF6FF008CE5C7 /* HapticsManager.swift in Sources */,
