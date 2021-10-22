@@ -167,12 +167,10 @@ class HomeViewController: UIViewController {
         self.tracks = tracks
         // Configure Models
         sections.append(.newReleases(viewModel: newAlbums.compactMap({
-            ///During development, api was updated and the numberOfTracks value started to come in nil.
-            ///Therefore I started using random value for the view.
             return NewReleasesCellViewModel(
                 name: $0.name,
                 artworkURL: URL(string: $0.images.first?.url ?? ""),
-                numberOfTracks: $0.totalTracks ?? Int.random(in: 1..<14),
+                numberOfTracks: $0.totalTracks,
                 artistName: $0.artists.first?.name ?? "-"
             )
         })))
