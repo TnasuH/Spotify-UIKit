@@ -11,6 +11,17 @@ enum BrowseSectionType {
     case newReleases(viewModel: [NewReleasesCellViewModel])        //1
     case featuredPlaylist(viewModel: [FeaturedPlaylistCellViewModel])   //2
     case recommandedTracks(viewModel: [RecommendedTrackCellViewModel])  //3
+    
+    var title: String {
+        switch self {
+        case .featuredPlaylist:
+            return "Featured Playlist"
+        case .newReleases:
+            return "New Released Albums"
+        case .recommandedTracks:
+            return "Recommended"
+        }
+    }
 }
 
 class HomeViewController: UIViewController {
@@ -56,6 +67,11 @@ class HomeViewController: UIViewController {
         collectionView.register(NewReleaseCollectionViewCell.self, forCellWithReuseIdentifier: NewReleaseCollectionViewCell.identifier)
         collectionView.register(FeaturedPlaylistCollectionViewCell.self, forCellWithReuseIdentifier: FeaturedPlaylistCollectionViewCell.identifier)
         collectionView.register(RecommendedTrackCollectionViewCell.self, forCellWithReuseIdentifier: RecommendedTrackCollectionViewCell.identifier)
+        collectionView.register(
+            TitleHeaderCollectionReusableView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: TitleHeaderCollectionReusableView.identifier
+        )
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.backgroundColor = .systemBackground
@@ -151,12 +167,10 @@ class HomeViewController: UIViewController {
         self.tracks = tracks
         // Configure Models
         sections.append(.newReleases(viewModel: newAlbums.compactMap({
-            ///During development, api was updated and the numberOfTracks value started to come in nil.
-            ///Therefore I started using random value for the view.
             return NewReleasesCellViewModel(
                 name: $0.name,
                 artworkURL: URL(string: $0.images.first?.url ?? ""),
-                numberOfTracks: $0.totalTracks ?? Int.random(in: 1..<14),
+                numberOfTracks: $0.totalTracks,
                 artistName: $0.artists.first?.name ?? "-"
             )
         })))
@@ -238,6 +252,20 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let header = collectionView.dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: TitleHeaderCollectionReusableView.identifier,
+            for: indexPath) as? TitleHeaderCollectionReusableView,
+              kind == UICollectionView.elementKindSectionHeader else
+            {
+                return UICollectionReusableView()
+            }
+        let title = sections[indexPath.section].title
+        header.configure(with: title)
+        return header
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         let section = sections[indexPath.section]
@@ -264,6 +292,17 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     private static func createSectionLayout(section: Int) -> NSCollectionLayoutSection {
+        let supplementaryViews = [
+            NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(75)
+                ),
+                elementKind: UICollectionView.elementKindSectionHeader,
+                alignment: .topLeading
+            )
+        ]
+        
         switch section {
         case 0:
             // Item
@@ -295,6 +334,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             // Section
             let section = NSCollectionLayoutSection(group: horizontalGroup)
             section.orthogonalScrollingBehavior = .groupPaging
+            section.boundarySupplementaryItems = supplementaryViews
             return section
         case 1:
             // Item
@@ -325,6 +365,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             // Section
             let section = NSCollectionLayoutSection(group: horizontalGroup)
             section.orthogonalScrollingBehavior = .continuous
+            section.boundarySupplementaryItems = supplementaryViews
             return section
         case 2:
             // Item
@@ -345,6 +386,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 count: 1)
             // Section
             let section = NSCollectionLayoutSection(group: group)
+            section.boundarySupplementaryItems = supplementaryViews
             return section
         default:
             // Item
@@ -365,6 +407,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 count: 1)
             // Section
             let section = NSCollectionLayoutSection(group: group)
+            section.boundarySupplementaryItems = supplementaryViews
             return section
         }
     }

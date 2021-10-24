@@ -49,7 +49,7 @@ class FeaturedPlaylistCollectionViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        let imageSize = contentView.height*0.7
+        let imageSize = contentView.height/1.6
         
         playlistCoverImageView.frame = CGRect(
             x: (contentView.width-imageSize)/2,

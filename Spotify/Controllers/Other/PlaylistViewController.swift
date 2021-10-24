@@ -8,7 +8,7 @@
 import UIKit
 
 class PlaylistViewController: UIViewController {
-
+    
     private var playlist: PlaylistsItem
     private var playlistDetail: GetPlaylists?
     private var viewModels = [RecommendedTrackCellViewModel]()
@@ -98,6 +98,24 @@ class PlaylistViewController: UIViewController {
                 }
             }
         }
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .action,
+            target: self,
+            action: #selector(didTapShare)
+        )
+    }
+    
+    @objc func didTapShare() {
+        guard let url = URL(string: playlist.externalUrls.spotify) else {
+            return
+        }
+        print(playlist.externalUrls.spotify)
+        let vc = UIActivityViewController(
+            activityItems: [url],
+            applicationActivities: []
+        )
+        vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(vc, animated: true)
     }
 }
 
@@ -110,7 +128,7 @@ extension PlaylistViewController: UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModels.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecommendedTrackCollectionViewCell.identifier, for: indexPath) as? RecommendedTrackCollectionViewCell else {
             return UICollectionViewCell()
@@ -136,6 +154,7 @@ extension PlaylistViewController: UICollectionViewDelegate, UICollectionViewData
             artworkURL: URL(string: self.playlist.images.first?.url ?? "")
         )
         header.configure(with: headerViewModel)
+        header.delegate = self
         return header
     }
     
@@ -143,5 +162,13 @@ extension PlaylistViewController: UICollectionViewDelegate, UICollectionViewData
         collectionView.deselectItem(at: indexPath, animated: true)
         //Play song func
     }
+}
+
+extension PlaylistViewController: PlaylistHeaderCollectionReusableViewDelegate {
+    func playlistHeaderCollectionReusableViewPlayAllButtonTapped(_ header: PlaylistHeaderCollectionReusableView) {
+        //Start playlist play all in queue
+        print("play All")
+    }
+    
     
 }

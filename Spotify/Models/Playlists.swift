@@ -16,12 +16,12 @@ import Foundation
 
 // MARK: - Playlists
 public struct Playlists: Codable {
-    public let href: String
+    public let href: String?
     public let items: [PlaylistsItem]
     public let limit: Int
-    public let next: JSONNull?
+    public let next: String?
     public let offset: Int
-    public let previous: JSONNull?
+    public let previous: String?
     public let total: Int
 
     enum CodingKeys: String, CodingKey {
@@ -34,7 +34,7 @@ public struct Playlists: Codable {
         case total = "total"
     }
 
-    public init(href: String, items: [PlaylistsItem], limit: Int, next: JSONNull?, offset: Int, previous: JSONNull?, total: Int) {
+    public init(href: String, items: [PlaylistsItem], limit: Int, next: String?, offset: Int, previous: String?, total: Int) {
         self.href = href
         self.items = items
         self.limit = limit
