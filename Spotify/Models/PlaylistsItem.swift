@@ -19,7 +19,7 @@ public struct PlaylistsItem: Codable {
     public let collaborative: Bool
     public let itemDescription: String
     public let externalUrls: ExternalUrls
-    public let href: String
+    public let href: String?
     public let id: String
     public let images: [Image]
     public let name: String
