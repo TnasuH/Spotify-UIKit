@@ -87,7 +87,6 @@ class PlaylistViewController: UIViewController {
                 case .success(let model):
                     self?.playlistDetail = model
                     self?.viewModels = model.tracks.items.compactMap({
-                        print($0)
                         return RecommendedTrackCellViewModel(
                             name: $0.track.name,
                             artistName: $0.track.artists.first?.name ?? "-",

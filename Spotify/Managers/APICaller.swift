@@ -55,8 +55,6 @@ final class APICaller {
                     return
                 }
                 do {
-                    let res = try JSONSerialization.jsonObject(with: data)
-                    print(res)
                     let result = try JSONDecoder().decode(GetPlaylists.self, from: data)
                     completion(.success(result))
                 }
