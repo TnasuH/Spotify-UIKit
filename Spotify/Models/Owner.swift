@@ -16,7 +16,7 @@ import Foundation
 
 // MARK: - Owner
 public struct Owner: Codable {
-    public let displayName: DisplayName?
+    public let displayName: String?
     public let externalUrls: ExternalUrls
     public let href: String
     public let id: String
@@ -34,7 +34,7 @@ public struct Owner: Codable {
         case name = "name"
     }
 
-    public init(displayName: DisplayName?, externalUrls: ExternalUrls, href: String, id: String, type: OwnerType, uri: String, name: String?) {
+    public init(displayName: String?, externalUrls: ExternalUrls, href: String, id: String, type: OwnerType, uri: String, name: String?) {
         self.displayName = displayName
         self.externalUrls = externalUrls
         self.href = href

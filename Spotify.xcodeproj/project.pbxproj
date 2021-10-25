@@ -15,6 +15,8 @@
 		2E247673271E263600FDEB09 /* NewReleaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E247672271E263600FDEB09 /* NewReleaseCollectionViewCell.swift */; };
 		2E247675271E266B00FDEB09 /* FeaturedPlaylistCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E247674271E266B00FDEB09 /* FeaturedPlaylistCollectionViewCell.swift */; };
 		2E247677271E26A500FDEB09 /* RecommendedTrackCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E247676271E26A500FDEB09 /* RecommendedTrackCollectionViewCell.swift */; };
+		2E4E6043272620A700F4A526 /* GetSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E6042272620A700F4A526 /* GetSearch.swift */; };
+		2E4E60452726226E00F4A526 /* Artists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E60442726226E00F4A526 /* Artists.swift */; };
 		2E5F35F4271EE81C009F95C5 /* FeaturedPlaylistCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5F35F3271EE81C009F95C5 /* FeaturedPlaylistCellViewModel.swift */; };
 		2E5F35F6271EE866009F95C5 /* RecommendedTrackCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5F35F5271EE866009F95C5 /* RecommendedTrackCellViewModel.swift */; };
 		2E5F35F8271F3F5F009F95C5 /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5F35F7271F3F5E009F95C5 /* AlbumViewController.swift */; };
@@ -98,6 +100,8 @@
 		2E247672271E263600FDEB09 /* NewReleaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReleaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		2E247674271E266B00FDEB09 /* FeaturedPlaylistCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedPlaylistCollectionViewCell.swift; sourceTree = "<group>"; };
 		2E247676271E26A500FDEB09 /* RecommendedTrackCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendedTrackCollectionViewCell.swift; sourceTree = "<group>"; };
+		2E4E6042272620A700F4A526 /* GetSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSearch.swift; sourceTree = "<group>"; };
+		2E4E60442726226E00F4A526 /* Artists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artists.swift; sourceTree = "<group>"; };
 		2E5F35F3271EE81C009F95C5 /* FeaturedPlaylistCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedPlaylistCellViewModel.swift; sourceTree = "<group>"; };
 		2E5F35F5271EE866009F95C5 /* RecommendedTrackCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendedTrackCellViewModel.swift; sourceTree = "<group>"; };
 		2E5F35F7271F3F5E009F95C5 /* AlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewController.swift; sourceTree = "<group>"; };
@@ -284,6 +288,8 @@
 				2E5F36B127209EFA009F95C5 /* VideoThumbnail.swift */,
 				2EE608E42724DABF0018B8F2 /* GetCategories.swift */,
 				2EE608E62724E9A00018B8F2 /* GetCategoryPlaylists.swift */,
+				2E4E6042272620A700F4A526 /* GetSearch.swift */,
+				2E4E60442726226E00F4A526 /* Artists.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -497,6 +503,7 @@
 				2E5F36DA27209EFC009F95C5 /* GenreSeeds.swift in Sources */,
 				2E5F36EF27209EFC009F95C5 /* User.swift in Sources */,
 				2EA34508271CF6C9008CE5C7 /* AuthManager.swift in Sources */,
+				2E4E60452726226E00F4A526 /* Artists.swift in Sources */,
 				2EA34506271CF65E008CE5C7 /* SearchResultsViewController.swift in Sources */,
 				2E5F36D327209EFC009F95C5 /* TrackExternalids.swift in Sources */,
 				2E5F36D927209EFC009F95C5 /* GetCurrentProfile.swift in Sources */,
@@ -556,6 +563,7 @@
 				2E5F36E127209EFC009F95C5 /* Owner.swift in Sources */,
 				2EA34502271CF629008CE5C7 /* PlayerViewController.swift in Sources */,
 				2EE608E72724E9A00018B8F2 /* GetCategoryPlaylists.swift in Sources */,
+				2E4E6043272620A700F4A526 /* GetSearch.swift in Sources */,
 				2E5F36DC27209EFC009F95C5 /* VideoThumbnail.swift in Sources */,
 				2EA3450A271CF6DF008CE5C7 /* APICaller.swift in Sources */,
 				2EE608E92724EBAD0018B8F2 /* CategoryCollectionViewCellViewModel.swift in Sources */,

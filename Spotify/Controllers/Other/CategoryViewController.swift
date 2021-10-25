@@ -98,7 +98,7 @@ extension CategoryViewController: UICollectionViewDataSource, UICollectionViewDe
             return UICollectionViewCell()
         }
         let playlistItem = playlists?.items[indexPath.row]
-        let creatorName = playlistItem?.owner.displayName?.rawValue
+        let creatorName = playlistItem?.owner.displayName
         cell.configure(with: FeaturedPlaylistCellViewModel(
             name: playlistItem?.name ?? "-",
             artworkURL: URL(string: playlistItem?.images.first?.url ?? ""),
