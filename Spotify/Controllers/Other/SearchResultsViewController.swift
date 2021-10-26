@@ -25,7 +25,13 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
     private let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.backgroundColor = .systemBackground
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(SearchResultDefaultTableViewCell.self,
+                           forCellReuseIdentifier: SearchResultDefaultTableViewCell.identifier)
+        tableView.register(SearchResultSubtitleTableViewCell.self,
+                           forCellReuseIdentifier: SearchResultSubtitleTableViewCell.identifier)
+        
+        tableView.register(UITableViewCell.self,
+                           forCellReuseIdentifier: "cell")
         tableView.isHidden = true
         return tableView
     }()
@@ -104,13 +110,49 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
         cell.detailTextLabel?.text = sections[indexPath.section].title
         switch result {
         case .track(model: let model):
-            cell.textLabel?.text = model.name
+            guard let searchCell = tableView.dequeueReusableCell(withIdentifier: SearchResultSubtitleTableViewCell.identifier, for: indexPath) as? SearchResultSubtitleTableViewCell else {
+                return UITableViewCell()
+            }
+            let viewModel = SearchResultSubtitleTableViewCellViewModel(
+                title: model.name,
+                subtitle: model.artists?.first?.name ?? "-",
+                artworkURL: URL(string: model.album?.images.first?.url ?? "")
+            )
+            searchCell.configure(with: viewModel)
+            return searchCell
         case .artist(model: let model):
-            cell.textLabel?.text = model.name
+            guard let searchCell = tableView.dequeueReusableCell(withIdentifier: SearchResultDefaultTableViewCell.identifier, for: indexPath) as? SearchResultDefaultTableViewCell else {
+                return UITableViewCell()
+            }
+            let viewModel = SearchResultDefaultTableViewCellViewModel(
+                title: model.name ?? "-",
+                artworkURL: URL(string: model.images?.first?.url ?? "")
+            )
+            searchCell.configure(with: viewModel)
+            return searchCell
+            //cell.textLabel?.text = model.name
         case .album(model: let model):
-            cell.textLabel?.text = model.name
+            guard let searchCell = tableView.dequeueReusableCell(withIdentifier: SearchResultSubtitleTableViewCell.identifier, for: indexPath) as? SearchResultSubtitleTableViewCell else {
+                return UITableViewCell()
+            }
+            let viewModel = SearchResultSubtitleTableViewCellViewModel(
+                title: model.name,
+                subtitle: model.artists.first?.name ?? "-",
+                artworkURL: URL(string: model.images.first?.url ?? "")
+            )
+            searchCell.configure(with: viewModel)
+            return searchCell
         case .playlist(model: let model):
-            cell.textLabel?.text = model.name
+            guard let searchCell = tableView.dequeueReusableCell(withIdentifier: SearchResultSubtitleTableViewCell.identifier, for: indexPath) as? SearchResultSubtitleTableViewCell else {
+                return UITableViewCell()
+            }
+            let viewModel = SearchResultSubtitleTableViewCellViewModel(
+                title: model.name,
+                subtitle: model.itemDescription,
+                artworkURL: URL(string: model.images.first?.url ?? "")
+            )
+            searchCell.configure(with: viewModel)
+            return searchCell
         }
         return cell
     }

@@ -17,7 +17,7 @@ import Foundation
 // MARK: - GetAlbums
 public struct GetAlbums: Codable {
     public let albumType: AlbumTypeEnum
-    public let artists: [Owner]
+    public let artists: [Artist]
     public let availableMarkets: [String]
     public let copyrights: [Copyright]
     public let externalids: GetAlbumsExternalids
@@ -58,7 +58,7 @@ public struct GetAlbums: Codable {
         case uri = "uri"
     }
 
-    public init(albumType: AlbumTypeEnum, artists: [Owner], availableMarkets: [String], copyrights: [Copyright], externalids: GetAlbumsExternalids, externalUrls: ExternalUrls, genres: [JSONAny], href: String, id: String, images: [Image], label: String, name: String, popularity: Int, releaseDate: String, releaseDatePrecision: String, totalTracks: Int, tracks: GetAlbumsTracks, type: AlbumTypeEnum, uri: String) {
+    public init(albumType: AlbumTypeEnum, artists: [Artist], availableMarkets: [String], copyrights: [Copyright], externalids: GetAlbumsExternalids, externalUrls: ExternalUrls, genres: [JSONAny], href: String, id: String, images: [Image], label: String, name: String, popularity: Int, releaseDate: String, releaseDatePrecision: String, totalTracks: Int, tracks: GetAlbumsTracks, type: AlbumTypeEnum, uri: String) {
         self.albumType = albumType
         self.artists = artists
         self.availableMarkets = availableMarkets

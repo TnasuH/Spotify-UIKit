@@ -82,15 +82,15 @@ class PlaylistViewController: UIViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .failure(let error):
-                    print("Err! \(error)")
+                    print("Err!66 \(error)")
                     break
                 case .success(let model):
                     self?.playlistDetail = model
                     self?.viewModels = model.tracks.items.compactMap({
                         return RecommendedTrackCellViewModel(
                             name: $0.track.name,
-                            artistName: $0.track.artists.first?.name ?? "-",
-                            artworkURL: URL(string: $0.track.album.images.first?.url ?? "")
+                            artistName: $0.track.artists?.first?.name ?? "-",
+                            artworkURL: URL(string: $0.track.album?.images.first?.url ?? "")
                         )
                     })
                     self?.collectionView.reloadData()
@@ -167,6 +167,13 @@ extension PlaylistViewController: PlaylistHeaderCollectionReusableViewDelegate {
     func playlistHeaderCollectionReusableViewPlayAllButtonTapped(_ header: PlaylistHeaderCollectionReusableView) {
         //Start playlist play all in queue
         print("play All")
+        var tracks = [Track]()
+        self.playlistDetail?.tracks.items.compactMap({ tracks.append($0.track) })
+        
+        if !tracks.isEmpty {
+            PlaybackPresenter.startPlayback(from: self, tracks: tracks)
+        }
+        
     }
     
     

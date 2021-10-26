@@ -16,14 +16,14 @@ import Foundation
 
 // MARK: - Track
 public struct Track: Codable {
-    public let album: AlbumElement
-    public let artists: [Owner]
-    public let availableMarkets: [String]
-    public let discNumber: Int
+    public let album: Album?
+    public let artists: [Artist]?
+    public let availableMarkets: [String]?
+    public let discNumber: Int?
     public let durationms: Int
     public let episode: Bool?
     public let explicit: Bool
-    public let externalids: TrackExternalids
+    public let externalids: Externalids
     public let externalUrls: ExternalUrls
     public let href: String
     public let id: String
@@ -31,10 +31,11 @@ public struct Track: Codable {
     public let name: String
     public let popularity: Int
     public let previewurl: String?
-    public let track: Bool?
     public let trackNumber: Int
     public let type: TrackType
     public let uri: String
+    public let restrictions: Restrictions?
+
 
     enum CodingKeys: String, CodingKey {
         case album = "album"
@@ -48,17 +49,17 @@ public struct Track: Codable {
         case externalUrls = "external_urls"
         case href = "href"
         case id = "id"
+        case restrictions = "restrictions"
         case isLocal = "is_local"
         case name = "name"
         case popularity = "popularity"
         case previewurl = "preview_url"
-        case track = "track"
         case trackNumber = "track_number"
         case type = "type"
         case uri = "uri"
     }
 
-    public init(album: AlbumElement, artists: [Owner], availableMarkets: [String], discNumber: Int, durationms: Int, episode: Bool?, explicit: Bool, externalids: TrackExternalids, externalUrls: ExternalUrls, href: String, id: String, isLocal: Bool, name: String, popularity: Int, previewurl: String?, track: Bool?, trackNumber: Int, type: TrackType, uri: String) {
+    public init(album: Album?, artists: [Artist]?, availableMarkets: [String]?, discNumber: Int, durationms: Int, episode: Bool?, explicit: Bool, externalids: Externalids, externalUrls: ExternalUrls, href: String, id: String, isLocal: Bool, name: String, popularity: Int, previewurl: String?, track: Bool?, trackNumber: Int, type: TrackType, uri: String, restrictions: Restrictions?) {
         self.album = album
         self.artists = artists
         self.availableMarkets = availableMarkets
@@ -74,9 +75,9 @@ public struct Track: Codable {
         self.name = name
         self.popularity = popularity
         self.previewurl = previewurl
-        self.track = track
         self.trackNumber = trackNumber
         self.type = type
         self.uri = uri
+        self.restrictions = restrictions
     }
 }

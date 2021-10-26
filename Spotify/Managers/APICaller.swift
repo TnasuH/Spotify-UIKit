@@ -203,8 +203,6 @@ final class APICaller {
                     return
                 }
                 do {
-                    let res = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
-                    print(res)
                     let result = try JSONDecoder().decode(GetCategoryPlaylists.self, from: data)
                     completion(.success(result.playlists))
                 } catch {
@@ -227,8 +225,6 @@ final class APICaller {
                     return
                 }
                 do {
-                    let res = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
-                    print(res)
                     let result = try JSONDecoder().decode(GetSearch.self, from: data)
                     var searchResult = [SearchResult]()
                     searchResult.append(

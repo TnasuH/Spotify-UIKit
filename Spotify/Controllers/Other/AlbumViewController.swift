@@ -85,7 +85,7 @@ class AlbumViewController: UIViewController {
                     self?.collectionView.reloadData()
                     break
                 case .failure(let error):
-                    print("Err! \(error.localizedDescription)")
+                    print("Err55! \(error.localizedDescription)")
                     break
                 }
             }
@@ -166,6 +166,14 @@ extension AlbumViewController: PlaylistHeaderCollectionReusableViewDelegate {
     func playlistHeaderCollectionReusableViewPlayAllButtonTapped(_ header: PlaylistHeaderCollectionReusableView) {
         //Start playlist play all in queue
         print("play All")
+        var tracks = [Track]()
+        
+        self.album?.tracks.items.compactMap({
+            tracks.append(Track(album: nil, artists: nil, availableMarkets: $0.availableMarkets, discNumber: $0.discNumber, durationms: $0.durationms, episode: false, explicit: $0.explicit, externalids: Externalids(isrc: ""), externalUrls: $0.externalUrls, href: $0.href, id: $0.id, isLocal: $0.isLocal, name: $0.name, popularity: 0, previewurl: $0.previewurl, track: true, trackNumber: $0.trackNumber, type: $0.type, uri: $0.uri, restrictions: nil))
+        })
+        if !tracks.isEmpty {
+            PlaybackPresenter.startPlayback(from: self, tracks: tracks)
+        }
     }
     
     

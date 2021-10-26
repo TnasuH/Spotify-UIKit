@@ -17,7 +17,7 @@ import Foundation
 // MARK: - Albums
 public struct Albums: Codable {
     public let href: String
-    public let items: [AlbumElement]
+    public let items: [Album]
     public let limit: Int
     public let next: String?
     public let offset: Int
@@ -34,7 +34,7 @@ public struct Albums: Codable {
         case total = "total"
     }
 
-    public init(href: String, items: [AlbumElement], limit: Int, next: String, offset: Int, previous: String?, total: Int) {
+    public init(href: String, items: [Album], limit: Int, next: String, offset: Int, previous: String?, total: Int) {
         self.href = href
         self.items = items
         self.limit = limit

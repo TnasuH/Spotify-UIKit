@@ -16,7 +16,7 @@ struct GetSearch: Codable {
 
 enum SearchResult {
     case track(model: Track)
-    case artist(model: Owner)
-    case album(model: AlbumElement)
+    case artist(model: Artist)
+    case album(model: Album)
     case playlist(model: PlaylistsItem)
 }
