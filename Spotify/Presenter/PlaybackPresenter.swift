@@ -14,14 +14,15 @@ final class PlaybackPresenter {
         from viewController:UIViewController,
         track: Track) {
             let vc = PlayerViewController()
-            viewController.present(vc, animated: true, completion: nil)
+            vc.title = track.name
+            viewController.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
     }
     
     static func startPlayback(
         from viewController:UIViewController,
         tracks: [Track]) {
             let vc = PlayerViewController()
-            viewController.present(vc, animated: true, completion: nil)
+            viewController.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
     }
     
 }
