@@ -137,7 +137,7 @@ extension SearchViewController: SearchResultsViewControllerDelegate {
             }
         case .track(model: let track):
             //vc = TrackViewController(track: track)
-            PlaybackPresenter.startPlayback(from: self, track: track)
+            PlaybackPresenter.shared.startPlayback(from: self, track: track)
             break
         case .album(model: let album):
             let vc = AlbumViewController(albumId: album.id)

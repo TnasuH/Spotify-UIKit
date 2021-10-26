@@ -35,6 +35,7 @@ public struct Track: Codable {
     public let type: TrackType
     public let uri: String
     public let restrictions: Restrictions?
+    public let images: [Image]?
 
 
     enum CodingKeys: String, CodingKey {
@@ -57,9 +58,10 @@ public struct Track: Codable {
         case trackNumber = "track_number"
         case type = "type"
         case uri = "uri"
+        case images = "images"
     }
 
-    public init(album: Album?, artists: [Artist]?, availableMarkets: [String]?, discNumber: Int, durationms: Int, episode: Bool?, explicit: Bool, externalids: Externalids, externalUrls: ExternalUrls, href: String, id: String, isLocal: Bool, name: String, popularity: Int, previewurl: String?, track: Bool?, trackNumber: Int, type: TrackType, uri: String, restrictions: Restrictions?) {
+    public init(album: Album?, artists: [Artist]?, availableMarkets: [String]?, discNumber: Int, durationms: Int, episode: Bool?, explicit: Bool, externalids: Externalids, externalUrls: ExternalUrls, href: String, id: String, isLocal: Bool, name: String, popularity: Int, previewurl: String?, track: Bool?, trackNumber: Int, type: TrackType, uri: String, restrictions: Restrictions?, images:[Image]?) {
         self.album = album
         self.artists = artists
         self.availableMarkets = availableMarkets
@@ -79,5 +81,6 @@ public struct Track: Codable {
         self.type = type
         self.uri = uri
         self.restrictions = restrictions
+        self.images = images
     }
 }

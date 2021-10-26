@@ -276,7 +276,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             navigationController?.pushViewController(vc, animated: true)
         case .recommandedTracks:
             let track = tracks[indexPath.row]
-            PlaybackPresenter.startPlayback(from: self, track: track)
+            PlaybackPresenter.shared.startPlayback(from: self, track: track)
         case .newReleases:
             let album = newAlbums[indexPath.row]
             let vc = AlbumViewController(albumId: album.id)
