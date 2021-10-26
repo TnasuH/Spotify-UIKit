@@ -166,12 +166,11 @@ extension PlaylistViewController: UICollectionViewDelegate, UICollectionViewData
 extension PlaylistViewController: PlaylistHeaderCollectionReusableViewDelegate {
     func playlistHeaderCollectionReusableViewPlayAllButtonTapped(_ header: PlaylistHeaderCollectionReusableView) {
         //Start playlist play all in queue
-        print("play All")
+        print("play All1")
         var tracks = [Track]()
         self.playlistDetail?.tracks.items.compactMap({ tracks.append($0.track) })
-        
         if !tracks.isEmpty {
-            PlaybackPresenter.startPlayback(from: self, tracks: tracks)
+            PlaybackPresenter.shared.startPlayback(from: self, tracks: tracks)
         }
         
     }

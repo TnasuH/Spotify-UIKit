@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol PlayerControlsViewDelegate: AnyObject {
-    func playerControlsViewChangeTrackCurrentTime(_ playerControlView: PlayerControlsView)
+    func playerControlsView(_ playerControlView: PlayerControlsView, didSlideVolume value: Float)
     func playerControlsViewDidTapPlayPauseButton(_ playerControlView: PlayerControlsView)
     func playerControlsViewDidTapForwardsButton(_ playerControlView: PlayerControlsView)
     func playerControlsViewDidTapBackwardsButton(_ playerControlView: PlayerControlsView)
@@ -18,6 +18,8 @@ protocol PlayerControlsViewDelegate: AnyObject {
 final class PlayerControlsView: UIView {
     
     weak var delegate: PlayerControlsViewDelegate?
+    
+    private var isPlaying = true
     
     private let volumeSlider: UISlider = {
         let slider = UISlider()
@@ -89,7 +91,7 @@ final class PlayerControlsView: UIView {
         backButton.addTarget(self, action: #selector(didTapBack), for: .touchUpInside)
         playPauseButton.addTarget(self, action: #selector(didTapPlayPause), for: .touchUpInside)
         forwardButton.addTarget(self, action: #selector(didTapForward), for: .touchUpInside)
-        volumeSlider.addTarget(self, action: #selector(volumeSliderChange), for: .editingChanged)
+        volumeSlider.addTarget(self, action: #selector(volumeSliderChange(_:)), for: .valueChanged)
     }
     
     @objc private func didTapBack() {
@@ -97,15 +99,25 @@ final class PlayerControlsView: UIView {
     }
     
     @objc private func didTapPlayPause() {
+        isPlaying = !isPlaying
         delegate?.playerControlsViewDidTapPlayPauseButton(self)
+        
+        //update icon
+        let playPauseIcon = UIImage(
+            systemName: isPlaying ? "pause.fill" : "play.fill",
+            withConfiguration: UIImage.SymbolConfiguration(pointSize: 34, weight: .regular)
+        )
+        playPauseButton.setImage(playPauseIcon, for: .normal)
     }
     
     @objc private func didTapForward() {
         delegate?.playerControlsViewDidTapForwardsButton(self)
     }
     
-    @objc private func volumeSliderChange(){
-        delegate?.playerControlsViewChangeTrackCurrentTime(self)
+    @objc private func volumeSliderChange(_ slider: UISlider) {
+        let sliderValue = slider.value
+        
+        delegate?.playerControlsView(self, didSlideVolume: sliderValue)
     }
     
     
@@ -141,4 +153,14 @@ final class PlayerControlsView: UIView {
         )
     }
     
+    func configure(with viewModel: PlayerControlsViewViewModel) {
+        isPlaying = true
+        nameLabel.text = viewModel.title
+        subTitleLabel.text = viewModel.subTitle
+        let playPauseIcon = UIImage(
+            systemName: isPlaying ? "pause.fill" : "play.fill",
+            withConfiguration: UIImage.SymbolConfiguration(pointSize: 34, weight: .regular)
+        )
+        playPauseButton.setImage(playPauseIcon, for: .normal)
+    }
 }
