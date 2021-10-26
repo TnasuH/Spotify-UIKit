@@ -26,7 +26,7 @@ enum BrowseSectionType {
 
 class HomeViewController: UIViewController {
     
-    private var newAlbums: [AlbumElement] = []
+    private var newAlbums: [Album] = []
     private var playList: [PlaylistsItem] = []
     private var tracks: [Track] = []
     
@@ -96,7 +96,7 @@ class HomeViewController: UIViewController {
             case .success(let model):
                 newReleases = model
             case .failure(let error):
-                print("Err!: \(error)")
+                print("Err!1: \(error)")
             }
         }
         
@@ -110,13 +110,11 @@ class HomeViewController: UIViewController {
                 featuredPlayList = model
                 break
             case .failure(let error):
-                print("Err!: \(error)")
+                print("Err!2: \(error)")
                 break
             }
         }
-        
         // Recommended tracks
-        
         APICaller.shared.getGenres { result in
             
             switch result {
@@ -138,11 +136,11 @@ class HomeViewController: UIViewController {
                     case .success(let model):
                         recommendations = model
                     case .failure(let error):
-                        print("Err!: \(error)")
+                        print("Err!3: \(error)")
                     }
                 }
             case .failure(let error):
-                print("Err!: \(error)")
+                print("Err!4: \(error)")
             }
         }
         
@@ -158,7 +156,7 @@ class HomeViewController: UIViewController {
     }
     
     private func configureModels(
-        newAlbums: [AlbumElement],
+        newAlbums: [Album],
         playList: [PlaylistsItem],
         tracks: [Track]
     ) {
@@ -185,8 +183,8 @@ class HomeViewController: UIViewController {
         sections.append(.recommandedTracks(viewModel: tracks.compactMap({
             return RecommendedTrackCellViewModel(
                 name: $0.name ,
-                artistName: $0.artists.first?.name ?? "-",
-                artworkURL: URL(string: $0.album.images.first?.url ?? "")
+                artistName: $0.artists?.first?.name ?? "-",
+                artworkURL: URL(string: $0.album?.images.first?.url ?? "")
             )
         })))
         collectionView.reloadData()
@@ -276,17 +274,15 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             vc.title = playlist.name
             vc.navigationItem.largeTitleDisplayMode = .never
             navigationController?.pushViewController(vc, animated: true)
-             break
         case .recommandedTracks:
-            break
+            let track = tracks[indexPath.row]
+            PlaybackPresenter.startPlayback(from: self, track: track)
         case .newReleases:
             let album = newAlbums[indexPath.row]
             let vc = AlbumViewController(albumId: album.id)
             vc.title = album.name
             vc.navigationItem.largeTitleDisplayMode = .never
             navigationController?.pushViewController(vc, animated: true)
-            
-            break
         }
         
     }

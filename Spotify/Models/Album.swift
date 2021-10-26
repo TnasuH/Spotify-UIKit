@@ -14,10 +14,10 @@
 
 import Foundation
 
-// MARK: - AlbumElement
-public struct AlbumElement: Codable {
+// MARK: - Album
+public struct Album: Codable {
     public let albumType: String
-    public let artists: [Owner]
+    public let artists: [Artist]
     public let availableMarkets: [String]
     public let externalUrls: ExternalUrls
     public let href: String
@@ -46,7 +46,7 @@ public struct AlbumElement: Codable {
         case uri = "uri"
     }
 
-    public init(albumType: String, artists: [Owner], availableMarkets: [String], externalUrls: ExternalUrls, href: String, id: String, images: [Image], name: String, releaseDate: String, releaseDatePrecision: String, totalTracks: Int, type: AlbumTypeEnum?, uri: String) {
+    public init(albumType: String, artists: [Artist], availableMarkets: [String], externalUrls: ExternalUrls, href: String, id: String, images: [Image], name: String, releaseDate: String, releaseDatePrecision: String, totalTracks: Int, type: AlbumTypeEnum?, uri: String) {
         self.albumType = albumType
         self.artists = artists
         self.availableMarkets = availableMarkets

@@ -6,32 +6,41 @@
 import Foundation
 
 // MARK: - Artist
-public struct Artist: Codable {
-    public let displayName: DisplayName?
-    public let externalUrls: ExternalUrls?
+public class Artist: Codable {
+    public let externalUrls: ExternalUrls
+    public let followers: Followers?
+    public let genres: [String]?
     public let href: String
     public let id: String
-    public let type: ArtistType
+    public let images: [Image]?
+    public let name: String
+    public let popularity: Int?
+    public let type: String
     public let uri: String
-    public let name: String?
 
     enum CodingKeys: String, CodingKey {
-        case displayName
-        case externalUrls
-        case href
-        case id
-        case type
-        case uri
-        case name
+        case externalUrls = "external_urls"
+        case followers = "followers"
+        case genres = "genres"
+        case href = "href"
+        case id = "id"
+        case images = "images"
+        case name = "name"
+        case popularity = "popularity"
+        case type = "type"
+        case uri = "uri"
     }
 
-    public init(displayName: DisplayName?, externalUrls: ExternalUrls, href: String, id: String, type: ArtistType, uri: String, name: String?) {
-        self.displayName = displayName
+    public init(externalUrls: ExternalUrls, followers: Followers, genres: [String], href: String, id: String, images: [Image], name: String, popularity: Int, type: String, uri: String) {
         self.externalUrls = externalUrls
+        self.followers = followers
+        self.genres = genres
         self.href = href
         self.id = id
+        self.images = images
+        self.name = name
+        self.popularity = popularity
         self.type = type
         self.uri = uri
-        self.name = name
     }
 }

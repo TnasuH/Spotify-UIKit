@@ -69,7 +69,7 @@ final class PlaylistHeaderCollectionReusableView: UICollectionReusableView {
     
     @objc func playAllButtonTapped() {
         //playAllTapped
-        print("playAllTapped")
+        delegate?.playlistHeaderCollectionReusableViewPlayAllButtonTapped(self)
     }
     
     required init?(coder: NSCoder) {

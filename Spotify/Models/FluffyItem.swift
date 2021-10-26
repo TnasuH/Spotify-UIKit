@@ -16,7 +16,7 @@ import Foundation
 
 // MARK: - FluffyItem
 public struct FluffyItem: Codable {
-    public let artists: [Owner]
+    public let artists: [Artist]
     public let availableMarkets: [String]
     public let discNumber: Int
     public let durationms: Int
@@ -48,7 +48,7 @@ public struct FluffyItem: Codable {
         case uri = "uri"
     }
 
-    public init(artists: [Owner], availableMarkets: [String], discNumber: Int, durationms: Int, explicit: Bool, externalUrls: ExternalUrls, href: String, id: String, isLocal: Bool, name: String, previewurl: String?, trackNumber: Int, type: TrackType, uri: String) {
+    public init(artists: [Artist], availableMarkets: [String], discNumber: Int, durationms: Int, explicit: Bool, externalUrls: ExternalUrls, href: String, id: String, isLocal: Bool, name: String, previewurl: String?, trackNumber: Int, type: TrackType, uri: String) {
         self.artists = artists
         self.availableMarkets = availableMarkets
         self.discNumber = discNumber

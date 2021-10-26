@@ -6,13 +6,16 @@
 //
 
 import UIKit
+import SafariServices
 
-class SearchViewController: UIViewController, UISearchResultsUpdating {
+class SearchViewController: UIViewController, UISearchResultsUpdating, UISearchBarDelegate {
     
     private let searchController : UISearchController = {
         let vc = UISearchController(searchResultsController: SearchResultsViewController())
         vc.searchBar.placeholder = "Search in Songs, Artists, Albums"
         vc.searchBar.searchBarStyle = .minimal
+        print("****")
+        print(vc.searchBar.center.y/2)
         vc.definesPresentationContext = true
         return vc
     }()
@@ -57,6 +60,7 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
         view.addSubview(collectionView)
         collectionView.register(CategoryCollectionViewCell.self,
@@ -70,6 +74,11 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
                 case .success(let categories):
                     self?.categories = categories
                     self?.collectionView.reloadData()
+                    
+                    //Hide searchBar like whatsapp search
+//                    DispatchQueue.main.async {
+//                        self?.collectionView.contentOffset = CGPoint(x: 0, y: self!.collectionView.contentOffset.y + 14);
+//                    }
                     break
                 case .failure(let error):
                     print(error)
@@ -83,17 +92,62 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         collectionView.frame = view.bounds
+        navigationItem.largeTitleDisplayMode = .always
+//        let indexPath = NSIndexPath(row: 0, section: 0) as IndexPath
+//        collectionView.scrollToItem(at: indexPath, at: UICollectionView.ScrollPosition.top, animated: true)
     }
     
     func updateSearchResults(for searchController: UISearchController) {
+        
+        
+        // resultController.update(with: results)
+        // Perform search
+        
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let resultController = searchController.searchResultsController as? SearchResultsViewController,
-              let query = searchController.searchBar.text,
+              let query = searchBar.text,
               !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return
         }
-        // resultController.update(with: results)
-        // Perform search
-        // APICaller.shared.search
+        
+        resultController.delegate = self
+        
+        APICaller.shared.search(with: query) {[weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let results):
+                    resultController.update(with: results)
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+}
+
+extension SearchViewController: SearchResultsViewControllerDelegate {
+    func didTapSearchResult(_ result: SearchResult) {
+        switch result {
+        case .artist(model: let artist):
+            if let url = URL(string: artist.externalUrls.spotify) {
+                let vc = SFSafariViewController(url: url)
+                present(vc, animated:true)
+            }
+        case .track(model: let track):
+            //vc = TrackViewController(track: track)
+            PlaybackPresenter.startPlayback(from: self, track: track)
+            break
+        case .album(model: let album):
+            let vc = AlbumViewController(albumId: album.id)
+            navigationItem.largeTitleDisplayMode = .never
+            navigationController?.pushViewController(vc, animated: true)
+        case .playlist(model: let playlist):
+            let vc = PlaylistViewController(playlist: playlist)
+            navigationItem.largeTitleDisplayMode = .never
+            navigationController?.pushViewController(vc, animated: true)
+        }
         
     }
 }
