@@ -16,7 +16,7 @@ public struct User: Codable {
     public let externalUrls: ExternalUrls?
     public let followers: Followers?
     public let href: String?
-    public let id: String?
+    public let id: String
     public let images: [Image]?
     public let product: String?
     public let type: OwnerType?
@@ -45,7 +45,7 @@ public struct User: Codable {
         case seeds
     }
 
-    public init(message: String?, playlists: Playlists?, country: String?, displayName: String?, email: String?, explicitContent: ExplicitContent?, externalUrls: ExternalUrls?, followers: Followers?, href: String?, id: String?, images: [Image]?, product: String?, type: OwnerType?, uri: String?, albums: Albums?, tracks: [Track]?, seeds: [Seed]?) {
+    public init(message: String?, playlists: Playlists?, country: String?, displayName: String?, email: String?, explicitContent: ExplicitContent?, externalUrls: ExternalUrls?, followers: Followers?, href: String?, id: String, images: [Image]?, product: String?, type: OwnerType?, uri: String?, albums: Albums?, tracks: [Track]?, seeds: [Seed]?) {
         self.message = message
         self.playlists = playlists
         self.country = country

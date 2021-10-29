@@ -27,9 +27,11 @@ class LibraryViewController: UIViewController {
         toggleView.delegate = self
         view.addSubview(toggleView)
         view.addSubview(scrollView)
-        scrollView.backgroundColor = .yellow
+        
+        scrollView.backgroundColor = .systemBackground
         scrollView.contentSize = CGSize(width: view.width*2, height: scrollView.height)
         addChildren()
+        updateBarButtons()
     }
     
     override func viewDidLayoutSubviews() {
@@ -45,6 +47,20 @@ class LibraryViewController: UIViewController {
             width: view.width,
             height: view.height-view.safeAreaInsets.top-view.safeAreaInsets.bottom-55
         )
+    }
+    
+    private func updateBarButtons() {
+        switch toggleView.state {
+        case .playlist:
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAdd))
+        case .album:
+            navigationItem.rightBarButtonItem = nil
+        }
+    }
+    
+    @objc private func didTapAdd() {
+        playlistsVC.showCreatePlaylistAlert()
+//        playlistsVC.actionLabelViewDidTapButton
     }
     
     private func addChildren() {
@@ -67,6 +83,7 @@ extension LibraryViewController: UIScrollViewDelegate {
         } else {
             toggleView.update(with: .playlist)
         }
+        updateBarButtons()
     }
 }
 
