@@ -65,7 +65,6 @@ class PlaylistViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(playlist)
         title = playlist.name
         view.backgroundColor = .systemBackground
         
@@ -152,7 +151,6 @@ class PlaylistViewController: UIViewController {
         guard let url = URL(string: playlist.externalUrls.spotify) else {
             return
         }
-        print(playlist.externalUrls.spotify)
         let vc = UIActivityViewController(
             activityItems: [url],
             applicationActivities: []
@@ -210,10 +208,8 @@ extension PlaylistViewController: UICollectionViewDelegate, UICollectionViewData
 extension PlaylistViewController: PlaylistHeaderCollectionReusableViewDelegate {
     func playlistHeaderCollectionReusableViewPlayAllButtonTapped(_ header: PlaylistHeaderCollectionReusableView) {
         //Start playlist play all in queue
-        print("play All1")
-        var tracks = [Track]()
-        self.playlistDetail?.tracks.items.compactMap({ tracks.append($0.track) })
-        if !tracks.isEmpty {
+        let tracksList = self.playlistDetail?.tracks.items.compactMap({ $0.track })
+        if let tracks = tracksList, tracks.count > 0 {
             PlaybackPresenter.shared.startPlayback(from: self, tracks: tracks)
         }
         

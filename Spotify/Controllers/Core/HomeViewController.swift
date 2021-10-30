@@ -255,7 +255,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         case .recommandedTracks(viewModel: let viewModels):
             return viewModels.count
         }
-        return 0
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {

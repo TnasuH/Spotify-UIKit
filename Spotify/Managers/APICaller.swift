@@ -98,7 +98,6 @@ final class APICaller {
     
     // MARK: - Playlists
     public func getPlaylists(for playlistsId: String, completion: @escaping (Result<GetPlaylists, Error>) -> Void) {
-        print("id \(playlistsId)")
         print(Constants.baseAPIURL + "/playlists/" + playlistsId)
         createRequest(with: URL(string: Constants.baseAPIURL + "/playlists/" + playlistsId), type: .GET) { request in
             let task = URLSession.shared.dataTask(with: request) { data, _, error in
@@ -128,8 +127,6 @@ final class APICaller {
                     return
                 }
                 do {
-                    let res = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
-                    print(res)
                     let result = try JSONDecoder().decode(Playlists.self, from: data)
                     completion(.success(result))
                 }
@@ -147,7 +144,6 @@ final class APICaller {
             switch result {
             case .success(let profile):
                 let url = Constants.baseAPIURL + "/users/\(profile.id)/playlists"
-                print(url)
                 self?.createRequest(
                     with: URL(string: url),
                     type: .POST
@@ -450,7 +446,6 @@ final class APICaller {
         AuthManager.shared.withValidToken { token in
             guard let apiURL = url else { return }
             var request = URLRequest(url: apiURL)
-            print(token)
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
             request.setValue("application/json", forHTTPHeaderField: "Accept")
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")

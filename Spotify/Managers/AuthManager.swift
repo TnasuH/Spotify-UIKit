@@ -197,9 +197,7 @@ final class AuthManager {
                 let result = try JSONDecoder().decode(AuthResponse.self, from: data)
                 self?.onRefreshBlock.forEach{ $0(result.access_token) }
                 self?.onRefreshBlock.removeAll()
-                print("Success!: \(result)")
-                self?.cacheToken(result: result)
-                
+                self?.cacheToken(result: result)                
                 completion?(true)
             }
             catch{
@@ -216,5 +214,13 @@ final class AuthManager {
             UserDefaults.standard.setValue(refresh_token, forKey: Constants.ud_refreshToken)
         }
         UserDefaults.standard.setValue(Date().addingTimeInterval(TimeInterval(result.expires_in)), forKey: Constants.ud_expirationDate)
+    }
+    
+    public func signOut(completion: (Bool) -> Void) {
+        UserDefaults.standard.setValue(nil, forKey: Constants.ud_accessToken)
+        UserDefaults.standard.setValue(nil, forKey: Constants.ud_refreshToken)
+        UserDefaults.standard.setValue(nil, forKey: Constants.ud_expirationDate)
+        UserDefaults.standard.setValue(nil, forKey: PublicConstant.ud_loginUserId)
+        completion(true)
     }
 }

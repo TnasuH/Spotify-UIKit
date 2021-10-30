@@ -74,7 +74,6 @@ class CategoryViewController: UIViewController {
                     HapticsManager.shared.vibrate(for: .error)
                 case .success(let model):
                     self?.playlists = model
-                    print(self?.playlists)
                     self?.collectionView.reloadData()
                 }
             }
