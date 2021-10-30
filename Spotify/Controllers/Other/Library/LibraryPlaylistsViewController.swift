@@ -52,6 +52,7 @@ class LibraryPlaylistsViewController: UIViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let res):
+                    HapticsManager.shared.vibrateForSelection()
                     if self?.selectionHandler != nil {
                         var myPlaylists = [PlaylistsItem]()
                         res.items.compactMap({
@@ -67,6 +68,7 @@ class LibraryPlaylistsViewController: UIViewController {
                    
                     self?.updateUI()
                 case .failure(let error):
+                    HapticsManager.shared.vibrate(for: .error)
                     print("Err!8: \(error.localizedDescription)")
                 }
             }
@@ -113,9 +115,11 @@ class LibraryPlaylistsViewController: UIViewController {
             APICaller.shared.createPlaylist(with: text) {[weak self] success in
                 if success == true {
                     //refresh playlist
+                    HapticsManager.shared.vibrateForSelection()
                     self?.fetchData()
                     print("asd")
                 } else {
+                    HapticsManager.shared.vibrate(for: .error)
                     print("Failed to create the playlist ")
                 }
             }
@@ -147,6 +151,7 @@ extension LibraryPlaylistsViewController: UITableViewDelegate, UITableViewDataSo
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        HapticsManager.shared.vibrateForSelection()
         if let playlist = playlists?.items[indexPath.row] {
             
             guard selectionHandler == nil else {

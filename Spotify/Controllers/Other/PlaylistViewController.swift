@@ -83,6 +83,7 @@ class PlaylistViewController: UIViewController {
                 switch result {
                 case .failure(let error):
                     print("Err!66 \(error)")
+                    HapticsManager.shared.vibrate(for: .error)
                     break
                 case .success(let model):
                     self?.playlistDetail = model
@@ -127,11 +128,13 @@ class PlaylistViewController: UIViewController {
                 APICaller.shared.removeTrackFromPlaylist(track: trackToDelete, playlist: self.playlist) { [weak self] result in
                     DispatchQueue.main.async {
                         if result == false {
+                            
+                            HapticsManager.shared.vibrate(for: .error)
                             let alert = UIAlertController(title: "Oups.. Something went wrong", message: "Please try again", preferredStyle: .alert)
                             alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
                             self?.present(alert,animated:true)
-                            
                         } else {
+                            HapticsManager.shared.vibrateForSelection()
                             self?.playlistDetail?.tracks.items.remove(at: indexPath.row)
                             self?.viewModels.remove(at: indexPath.row)
                             self?.collectionView.reloadData()

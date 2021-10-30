@@ -71,6 +71,7 @@ class CategoryViewController: UIViewController {
                 switch result {
                 case .failure(let error):
                     print(error)
+                    HapticsManager.shared.vibrate(for: .error)
                 case .success(let model):
                     self?.playlists = model
                     print(self?.playlists)

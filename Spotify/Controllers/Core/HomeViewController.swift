@@ -193,6 +193,8 @@ class HomeViewController: UIViewController {
             guard let releases = newReleases?.albums.items,
                   let playList = featuredPlayList?.playlists.items,
                   let tracks = recommendations else {
+                      
+                      HapticsManager.shared.vibrate(for: .error)
                       fatalError("Models are nil")
                   }
             self.configureModels(newAlbums: releases, playList: playList, tracks: tracks.tracks)
@@ -310,6 +312,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
+        HapticsManager.shared.vibrateForSelection()
         let section = sections[indexPath.section]
         switch section {
         case .featuredPlaylist:

@@ -85,6 +85,7 @@ class AlbumViewController: UIViewController {
                     self?.collectionView.reloadData()
                     break
                 case .failure(let error):
+                    HapticsManager.shared.vibrate(for: .error)
                     print("Err55! \(error.localizedDescription)")
                     break
                 }
@@ -159,6 +160,7 @@ extension AlbumViewController: UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         //Play song func
+        
     }
 }
 
