@@ -5,6 +5,8 @@ This project developed using via UIKit without Storyboard / Particle-SDK cocoapo
 Built using XCode 13.0 (Swift 5.5)
 
 
+![alt text](https://github.com/TnasuH/Spotify-UIKit/blob/master/githubImages/exampleProjectScreen.gif?raw=true)
+
 ### How to run the example?
 
 1. Clone this repo
@@ -25,5 +27,5 @@ Built using XCode 13.0 (Swift 5.5)
 </dict>
 </plist>
 ```
-
-1. ps: ClientID and ClientSecret values can be generated in [Developer Spotify Web Site](https://developer.spotify.com/)
+![alt text](https://github.com/TnasuH/Spotify-UIKit/blob/master/githubImages/spotifyKeysExample.jpeg?raw=true)
+6. ps: ClientID and ClientSecret values can be generated in [Developer Spotify Web Site](https://developer.spotify.com/)
