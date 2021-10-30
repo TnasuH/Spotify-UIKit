@@ -12,7 +12,6 @@ Built using XCode 13.0 (Swift 5.5)
 1. Clone this repo
 1. Open shell window and navigate to project folder
 1. Run `pod install`
-1. Open `Spotify.xcworkspace` and run the project on selected device or simulator
 1. Create an `ClientConfig.plist` file in the Project->Spotify->Resources folder like 
 
 ```
@@ -28,4 +27,6 @@ Built using XCode 13.0 (Swift 5.5)
 </plist>
 ```
 ![alt text](https://github.com/TnasuH/Spotify-UIKit/blob/master/githubImages/spotifyKeysExample.jpeg?raw=true)
+
+5. Open `Spotify.xcworkspace` and run the project on selected device or simulator
 6. ps: ClientID and ClientSecret values can be generated in [Developer Spotify Web Site](https://developer.spotify.com/)
