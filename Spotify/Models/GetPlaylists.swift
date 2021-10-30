@@ -28,7 +28,7 @@ public struct GetPlaylists: Codable {
     public let primaryColor: String?
     public let getPlaylistsPublic: Bool
     public let snapshotid: String
-    public let tracks: GetPlaylistsTracks
+    public var tracks: GetPlaylistsTracks
     public let type: GetPlaylistsType
     public let uri: String
 
