@@ -91,11 +91,28 @@ class AlbumViewController: UIViewController {
                 }
             }
         }
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .action,
-            target: self,
-            action: #selector(didTapShare)
-        )
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(didTapActions)),
+            UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(didTapShare)
+            )
+        ]
+    }
+    
+    @objc func didTapActions() {
+        let actionSheet = UIAlertController(title: album?.name, message: "Actions", preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: "Save Album", style: .default, handler: {[weak self] _ in
+            guard let StrongSelf = self else { return }
+            APICaller.shared.saveAlbum(albumId: StrongSelf.albumId) { [weak self] result in
+                if result == true {
+                    HapticsManager.shared.vibrateForSelection()
+                    NotificationCenter.default.post(name: .albumSavedNotification, object: nil)
+                } else {
+                    print("save error")
+                }
+            }
+        }))
+        present(actionSheet, animated: true)
     }
     
     @objc func didTapShare() {

@@ -83,15 +83,16 @@ class LibraryPlaylistsViewController: UIViewController {
     }
     
     private func updateUI() {
-        if let playlist = playlists, playlist.items.isEmpty {
-            //show label
-            noPlaylistView.isHidden = false
-            tableView.isHidden = true
-        } else {
+        if let playlist = playlists, !playlist.items.isEmpty {
             //show table
             noPlaylistView.isHidden = true
             tableView.isHidden = false
             tableView.reloadData()
+        } else {
+            //hide table
+            noPlaylistView.isHidden = false
+            tableView.isHidden = true
+            
         }
     }
     
