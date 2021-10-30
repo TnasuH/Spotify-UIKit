@@ -184,18 +184,14 @@ extension AlbumViewController: UICollectionViewDelegate, UICollectionViewDataSou
 extension AlbumViewController: PlaylistHeaderCollectionReusableViewDelegate {
     func playlistHeaderCollectionReusableViewPlayAllButtonTapped(_ header: PlaylistHeaderCollectionReusableView) {
         //Start playlist play all in queue
-        print("play All2")
-        var tracks = [Track]()
-        
-        self.album?.tracks.items.compactMap({
-            tracks.append(Track(album: nil, artists: nil, availableMarkets: $0.availableMarkets, discNumber: $0.discNumber, durationms: $0.durationms, episode: false, explicit: $0.explicit, externalids: Externalids(isrc: ""), externalUrls: $0.externalUrls, href: $0.href, id: $0.id, isLocal: $0.isLocal, name: $0.name, popularity: 0, previewurl: $0.previewurl, track: true, trackNumber: $0.trackNumber, type: $0.type, uri: $0.uri, restrictions: nil, images: self.album?.images))
+        let tracks = self.album?.tracks.items.compactMap({
+            Track(album: nil, artists: nil, availableMarkets: $0.availableMarkets, discNumber: $0.discNumber, durationms: $0.durationms, episode: false, explicit: $0.explicit, externalids: Externalids(isrc: ""), externalUrls: $0.externalUrls, href: $0.href, id: $0.id, isLocal: $0.isLocal, name: $0.name, popularity: 0, previewurl: $0.previewurl, track: true, trackNumber: $0.trackNumber, type: $0.type, uri: $0.uri, restrictions: nil, images: self.album?.images)
         })
-        if !tracks.isEmpty {
+        if let tracks = tracks, tracks.count > 0 {
             PlaybackPresenter.shared.startPlayback(from: self, tracks: tracks)
         }
     }
-    
-    
+
 }
 
     

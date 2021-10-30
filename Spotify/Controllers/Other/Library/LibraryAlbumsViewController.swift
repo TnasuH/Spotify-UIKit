@@ -82,17 +82,6 @@ class LibraryAlbumsViewController: UIViewController {
             albumTableView.isHidden = true
             
         }
-        
-//        if let album = album, !album.items.isEmpty {
-//            //show label
-//            noAlbumsView.isHidden = false
-//            albumTableView.isHidden = true
-//        } else {
-//            noAlbumsView.isHidden = true
-//            albumTableView.isHidden = false
-//            albumTableView.reloadData()
-//
-//        }
     }
 }
 

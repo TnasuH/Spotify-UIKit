@@ -17,7 +17,7 @@ final class PlaylistHeaderCollectionReusableView: UICollectionReusableView {
     
     weak var delegate : PlaylistHeaderCollectionReusableViewDelegate?
     
-    private let nameLabel: UILabel = {
+    private let nameLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 22, weight: .semibold)
         label.contentMode = .center

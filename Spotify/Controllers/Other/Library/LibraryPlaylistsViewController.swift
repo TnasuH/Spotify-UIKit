@@ -118,7 +118,6 @@ class LibraryPlaylistsViewController: UIViewController {
                     //refresh playlist
                     HapticsManager.shared.vibrateForSelection()
                     self?.fetchData()
-                    print("asd")
                 } else {
                     HapticsManager.shared.vibrate(for: .error)
                     print("Failed to create the playlist ")

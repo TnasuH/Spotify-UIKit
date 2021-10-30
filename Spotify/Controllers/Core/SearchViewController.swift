@@ -14,8 +14,6 @@ class SearchViewController: UIViewController, UISearchResultsUpdating, UISearchB
         let vc = UISearchController(searchResultsController: SearchResultsViewController())
         vc.searchBar.placeholder = "Search in Songs, Artists, Albums"
         vc.searchBar.searchBarStyle = .minimal
-        print("****")
-        print(vc.searchBar.center.y/2)
         vc.definesPresentationContext = true
         return vc
     }()
@@ -82,7 +80,6 @@ class SearchViewController: UIViewController, UISearchResultsUpdating, UISearchB
                     break
                 case .failure(let error):
                     print(error)
-                    
                     HapticsManager.shared.vibrate(for: .error)
                     break
                 }
@@ -95,16 +92,9 @@ class SearchViewController: UIViewController, UISearchResultsUpdating, UISearchB
         super.viewDidLayoutSubviews()
         collectionView.frame = view.bounds
         navigationItem.largeTitleDisplayMode = .always
-//        let indexPath = NSIndexPath(row: 0, section: 0) as IndexPath
-//        collectionView.scrollToItem(at: indexPath, at: UICollectionView.ScrollPosition.top, animated: true)
     }
     
     func updateSearchResults(for searchController: UISearchController) {
-        
-        
-        // resultController.update(with: results)
-        // Perform search
-        
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

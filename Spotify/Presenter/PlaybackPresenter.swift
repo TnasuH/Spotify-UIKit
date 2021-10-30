@@ -59,16 +59,12 @@ final class PlaybackPresenter {
         tracks: [Track]) {
             self.track = nil
             self.tracks = tracks.filter({ $0.previewurl != nil })
-            print("dd")
             self.currentTrackIndex = 0
             guard let url = URL(string: self.tracks[currentTrackIndex].previewurl ?? "") else { return }
-            print("asd")
             player = AVPlayer(url: url)
-            self.playerItems = []
-            self.tracks.compactMap({
-                self.playerItems.append(AVPlayerItem(url: URL(string: $0.previewurl!)!))
+            self.playerItems = self.tracks.compactMap({
+                AVPlayerItem(url: URL(string: $0.previewurl!)!)
             })
-            
             self.player?.volume = 0.5
             let vc = PlayerViewController()
             vc.dataSource = self

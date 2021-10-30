@@ -125,7 +125,7 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
                 return UITableViewCell()
             }
             let viewModel = SearchResultDefaultTableViewCellViewModel(
-                title: model.name ?? "-",
+                title: model.name,
                 artworkURL: URL(string: model.images?.first?.url ?? "")
             )
             searchCell.configure(with: viewModel)
@@ -154,7 +154,6 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
             searchCell.configure(with: viewModel)
             return searchCell
         }
-        return cell
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
