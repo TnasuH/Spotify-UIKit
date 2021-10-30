@@ -17,7 +17,7 @@ import Foundation
 // MARK: - GetPlaylistsTracks
 public struct GetPlaylistsTracks: Codable {
     public let href: String
-    public let items: [PurpleItem]
+    public var items: [PurpleItem]
     public let limit: Int
     public let next: String?
     public let offset: Int

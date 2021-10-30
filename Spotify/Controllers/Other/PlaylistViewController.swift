@@ -12,7 +12,7 @@ class PlaylistViewController: UIViewController {
     private var playlist: PlaylistsItem
     private var playlistDetail: GetPlaylists?
     private var viewModels = [RecommendedTrackCellViewModel]()
-    
+    public var isOwner: Bool = false
     
     init(playlist: PlaylistsItem){
         self.playlist = playlist
@@ -83,6 +83,7 @@ class PlaylistViewController: UIViewController {
                 switch result {
                 case .failure(let error):
                     print("Err!66 \(error)")
+                    HapticsManager.shared.vibrate(for: .error)
                     break
                 case .success(let model):
                     self?.playlistDetail = model
@@ -102,6 +103,49 @@ class PlaylistViewController: UIViewController {
             target: self,
             action: #selector(didTapShare)
         )
+        let gesture = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(_:)))
+        collectionView.addGestureRecognizer(gesture)
+    }
+    
+    @objc private func didLongPress(_ gesture: UILongPressGestureRecognizer) {
+        guard gesture.state == .began else {
+            return
+        }
+        if playlist.owner.id != PublicConstant.getLoginUserId() {
+            return
+        }
+        
+        let touchPoint = gesture.location(in: collectionView)
+        guard let indexPath = collectionView.indexPathForItem(at: touchPoint) else { return }
+        
+        if let trackToDelete = self.playlistDetail?.tracks.items[indexPath.row].track {
+            
+            let actionSheet = UIAlertController(title: "Remove", message: "Would you like to remove this from the playlist?", preferredStyle: .actionSheet)
+            
+            actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            actionSheet.addAction(UIAlertAction(title: "Remove", style: .default, handler: { _ in
+                
+                APICaller.shared.removeTrackFromPlaylist(track: trackToDelete, playlist: self.playlist) { [weak self] result in
+                    DispatchQueue.main.async {
+                        if result == false {
+                            
+                            HapticsManager.shared.vibrate(for: .error)
+                            let alert = UIAlertController(title: "Oups.. Something went wrong", message: "Please try again", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+                            self?.present(alert,animated:true)
+                        } else {
+                            HapticsManager.shared.vibrateForSelection()
+                            self?.playlistDetail?.tracks.items.remove(at: indexPath.row)
+                            self?.viewModels.remove(at: indexPath.row)
+                            self?.collectionView.reloadData()
+                        }
+                    }
+                }
+                
+            }))
+            present(actionSheet, animated: true)
+        }
+        
     }
     
     @objc func didTapShare() {

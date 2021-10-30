@@ -82,6 +82,8 @@ class SearchViewController: UIViewController, UISearchResultsUpdating, UISearchB
                     break
                 case .failure(let error):
                     print(error)
+                    
+                    HapticsManager.shared.vibrate(for: .error)
                     break
                 }
             }
@@ -121,6 +123,7 @@ class SearchViewController: UIViewController, UISearchResultsUpdating, UISearchB
                     resultController.update(with: results)
                 case .failure(let error):
                     print(error.localizedDescription)
+                    HapticsManager.shared.vibrate(for: .error)
                 }
             }
         }
@@ -173,6 +176,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        HapticsManager.shared.vibrateForSelection()
         collectionView.deselectItem(at: indexPath, animated: true)
         let category = categories[indexPath.row]
         let vc = CategoryViewController(category: category)

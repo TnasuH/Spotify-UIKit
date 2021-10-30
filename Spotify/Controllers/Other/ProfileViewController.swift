@@ -41,6 +41,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                     self?.updateUI(with: model)
                     break
                 case .failure(let error):
+                    HapticsManager.shared.vibrate(for: .error)
                     print("Err! getCurrentUserProfile: \(error.localizedDescription)")
                     self?.failedToUserProfile()
                 }
