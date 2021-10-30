@@ -9,6 +9,8 @@ import UIKit
 
 class LibraryPlaylistsViewController: UIViewController {
 
+    public var selectionHandler: ((PlaylistsItem) -> Void)?
+    
     private var playlists: Playlists?
     
     private let noPlaylistView = ActionLabelView()
@@ -23,10 +25,16 @@ class LibraryPlaylistsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
+        view.backgroundColor = .systemBackground
         tableView.dataSource = self
         view.addSubview(tableView)
         setupNoPlaylistView()
         fetchData()
+        
+        if selectionHandler != nil {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(didTapClose))
+        }
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -35,12 +43,28 @@ class LibraryPlaylistsViewController: UIViewController {
         tableView.frame = view.bounds
     }
     
+    @objc private func didTapClose() {
+        dismiss(animated: true, completion: nil)
+    }
+    
     private func fetchData() {
         APICaller.shared.getCurrentUserPlaylists { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let res):
-                    self?.playlists = res
+                    if self?.selectionHandler != nil {
+                        var myPlaylists = [PlaylistsItem]()
+                        res.items.compactMap({
+                            if $0.owner.id == PublicConstant.getLoginUserId() {
+                                myPlaylists.append($0)
+                            }
+                        })
+                        self?.playlists = Playlists(href: res.href, items: myPlaylists, limit: res.limit, next: res.next, offset: res.offset, previous: res.previous, total: res.total)
+                    } else {
+                        self?.playlists = res
+                    }
+                    
+                   
                     self?.updateUI()
                 case .failure(let error):
                     print("Err!8: \(error.localizedDescription)")
@@ -123,6 +147,18 @@ extension LibraryPlaylistsViewController: UITableViewDelegate, UITableViewDataSo
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        if let playlist = playlists?.items[indexPath.row] {
+            
+            guard selectionHandler == nil else {
+                selectionHandler?(playlist)
+                dismiss(animated: true, completion: nil)
+                return
+            }
+            
+            let vc = PlaylistViewController(playlist: playlist)
+            vc.navigationItem.largeTitleDisplayMode = .never
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

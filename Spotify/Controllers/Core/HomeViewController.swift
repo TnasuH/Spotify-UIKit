@@ -54,11 +54,57 @@ class HomeViewController: UIViewController {
         configureCollectionView()
         view.addSubview(spinner)
         fetchData()
+        addLongTapGesture()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         collectionView.frame = view.bounds
+    }
+    
+    private func addLongTapGesture() {
+        let gesture = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(_:)))
+        collectionView.addGestureRecognizer(gesture)
+    }
+    
+    @objc private func didLongPress(_ gesture: UITapGestureRecognizer) {
+        guard gesture.state == .began else {
+            return
+        }
+        
+        let touchPoint = gesture.location(in: collectionView)
+        
+        guard let indexPath = collectionView.indexPathForItem(at: touchPoint),
+              indexPath.section == 2
+        else {
+            return
+        }
+        
+        let model = tracks[indexPath.row]
+        
+        let actionSheet = UIAlertController(title: model.name, message: "Would you like to add to playlist?", preferredStyle: .actionSheet)
+        
+        actionSheet.addAction(UIAlertAction(title: "Add", style: .default, handler: {[weak self] _ in
+            DispatchQueue.main.async {
+                let vc = LibraryPlaylistsViewController()
+                vc.selectionHandler = { playlist in
+                    APICaller.shared.addTrackToPlaylist(track: model, playlist: playlist) {[weak self] success in
+                        DispatchQueue.main.async {
+                            if success == false {
+                                let alert = UIAlertController(title: "Oups.. Something went wrong", message: "There was an error, please try again", preferredStyle: .alert)
+                                alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+                                self?.present(alert, animated: true)
+                            }
+                        }
+                    }
+                }
+                vc.title = "Select playlist"
+                self?.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
+            }
+        }))
+        
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(actionSheet, animated: true)
     }
     
     private func configureCollectionView() {
@@ -116,7 +162,6 @@ class HomeViewController: UIViewController {
         }
         // Recommended tracks
         APICaller.shared.getGenres { result in
-            
             switch result {
             case .success(let model):
                 let genres = model.genres
@@ -149,7 +194,6 @@ class HomeViewController: UIViewController {
                   let playList = featuredPlayList?.playlists.items,
                   let tracks = recommendations else {
                       fatalError("Models are nil")
-                      return
                   }
             self.configureModels(newAlbums: releases, playList: playList, tracks: tracks.tracks)
         }
@@ -221,30 +265,30 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let type = sections[indexPath.section]
         switch type {
         case .featuredPlaylist(viewModel: let viewModels):
-             guard let cell = collectionView.dequeueReusableCell(
+            guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: FeaturedPlaylistCollectionViewCell.identifier,
                 for: indexPath)
-            as? FeaturedPlaylistCollectionViewCell  else {
-                return UICollectionViewCell()
-            }
+                    as? FeaturedPlaylistCollectionViewCell  else {
+                        return UICollectionViewCell()
+                    }
             cell.configure(with: viewModels[indexPath.row])
             return cell
         case .newReleases(viewModel: let viewModels):
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: NewReleaseCollectionViewCell.identifier,
                 for: indexPath)
-            as? NewReleaseCollectionViewCell  else {
-                return UICollectionViewCell()
-            }
+                    as? NewReleaseCollectionViewCell  else {
+                        return UICollectionViewCell()
+                    }
             cell.configure(with: viewModels[indexPath.row])
             return cell
         case .recommandedTracks(viewModel: let viewModels):
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: RecommendedTrackCollectionViewCell.identifier,
                 for: indexPath)
-            as? RecommendedTrackCollectionViewCell else {
-                return UICollectionViewCell()
-            }
+                    as? RecommendedTrackCollectionViewCell else {
+                        return UICollectionViewCell()
+                    }
             cell.configure(with: viewModels[indexPath.row])
             return cell
         }
@@ -256,9 +300,9 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             withReuseIdentifier: TitleHeaderCollectionReusableView.identifier,
             for: indexPath) as? TitleHeaderCollectionReusableView,
               kind == UICollectionView.elementKindSectionHeader else
-            {
-                return UICollectionReusableView()
-            }
+              {
+                  return UICollectionReusableView()
+              }
         let title = sections[indexPath.section].title
         header.configure(with: title)
         return header

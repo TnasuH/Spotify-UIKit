@@ -34,7 +34,7 @@ public struct Playlists: Codable {
         case total = "total"
     }
 
-    public init(href: String, items: [PlaylistsItem], limit: Int, next: String?, offset: Int, previous: String?, total: Int) {
+    public init(href: String?, items: [PlaylistsItem], limit: Int, next: String?, offset: Int, previous: String?, total: Int) {
         self.href = href
         self.items = items
         self.limit = limit
