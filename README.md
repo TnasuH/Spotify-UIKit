@@ -4,6 +4,7 @@ This project developed using via UIKit without Storyboard / Particle-SDK cocoapo
 
 Built using XCode 13.0 (Swift 5.5)
 
+Preview GIF (Please wait for loading gif):
 
 ![alt text](https://github.com/TnasuH/Spotify-UIKit/blob/master/githubImages/exampleProjectScreen.gif?raw=true)
 
